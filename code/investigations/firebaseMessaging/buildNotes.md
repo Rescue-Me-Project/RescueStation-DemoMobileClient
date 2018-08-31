@@ -20,4 +20,7 @@
 	- clicked 'register app'
 	- downloaded config file (.json for android, .plist for ios)
 		- move this into project root - 'firebaseMessaging' cordova project
+
+- in config.xml 
+	- added `<resource-file src="google-services.json" target="google-services.json" />` under '<platform name="android">` element
 	- 
