@@ -22,5 +22,8 @@
 		- move this into project root - 'firebaseMessaging' cordova project
 
 - in config.xml 
-	- added `<resource-file src="google-services.json" target="google-services.json" />` under '<platform name="android">` element
-	- 
+	- added `<resource-file src="google-services.json" target="google-services.json" />` under '<platform name="android">` element ( [via](https://stackoverflow.com/a/51581751) )
+	- ( [via](http://www.damirscorner.com/blog/posts/20171110-SpecifyingAndroidSdkVersionInCordova.html) ) might need to update android SDK to 6.3.0 to support messaging
+	-  `cordova platform rm android; cordova platform add android@6.3.0`
+	-  had to `npm install android-versions --save` before I could `cordova android run android` ( though `cordova android build android` was fine)
+	-   
