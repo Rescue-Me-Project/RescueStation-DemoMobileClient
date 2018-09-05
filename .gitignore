@@ -1,3 +1,5 @@
 /code/investigations/nativePushTest/platforms
 /code/investigations/nativePushTest/node_modules
 /code/investigations/nativePushTest/plugins
+code/investigations/firebaseMessaging/.gradle
+code/investigations/firebaseMessaging/gradle
