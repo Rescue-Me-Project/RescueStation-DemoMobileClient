@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "110908283635",
+    "firebase_url": "https://rescuestationpushtest.firebaseio.com",
+    "project_id": "rescuestationpushtest",
+    "storage_bucket": "rescuestationpushtest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110908283635:android:fa3a4548950b59eb",
+        "android_client_info": {
+          "package_name": "uk.ac.mmu.digitallabs.rs.fbtest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110908283635-80eq82q565j27tit4p3050s8lvuk2r5b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRqs8oZys5sXvcSRgxuickynJ7_v8bS40"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
