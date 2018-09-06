@@ -29,6 +29,22 @@ var app = {
   onDeviceReady: function() {
     this.receivedEvent('deviceready');
     this.initialisePush();
+    if( window.localStorage.getItem("latinate task")) {
+      app.updateTaskFromStorage();
+    } else {
+      this.updateLatinateTask("No task","");
+    }
+  },
+
+  updateTaskFromStorage: function updateTaskFromStorage() {
+    this.updateLatinateTask("Latinate Task",window.localStorage.getItem("latinate task") ) ;
+  },
+
+  updateLatinateTask: function updateLatinateTask(k,v) {
+    var eK = parentElement.querySelector('#k');
+    var eV = parentElement.querySelector('#v');
+    eK.innerHTML = k;
+    eV.innerHTML = v;
   },
 
   // Update DOM on a Received Event
@@ -50,21 +66,24 @@ var app = {
     app.push.on('registration',function(data){
       console.log("push.registration event, ", data);
     });
+
     app.push.on('notification', function(data){
       console.log("push.notification event, ", data);
       if(data.hasOwnProperty("additionalData")) {
         console.log("background message got: ",data.additionalData);
         window.localStorage.setItem("contentAvailable", data.additionalData["data"]);
         var req=new app.HttpClient();
-        req.get("https://jsonplaceholder.typicode.com/todos/1",function(response) {
+        req.get("https://jsonplaceholder.typicode.com/todos/"+String((Math.random()*10)+1),function(response) {
           console.log("got a http response", response);
-          window.localStorage.setItem("http",response);
+          window.localStorage.setItem("latinate task",response.title);
         } );
       }
     });
+
     app.push.on('error', function (error) {
       console.log(error);
-      alert(error);
+      //alert(error);
+      app.updateLatinateTask("Error",error);
     });
   }
 
