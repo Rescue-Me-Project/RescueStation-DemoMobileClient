@@ -40,7 +40,7 @@ var app = {
 
   updateTaskFromStorage: function updateTaskFromStorage() {
     try {
-      this.updateLatinateTask("Latinate Task",window.localStorage.getItem("latinate task") ) ;
+      app.updateLatinateTask("Latinate Task",window.localStorage.getItem("latinate task") ) ;
       console.log("updated task interface okay")
     } catch (err) {
       console.log("meh, no task set");
@@ -74,17 +74,17 @@ var app = {
     app.push.on('registration',function(data){
       console.log("push.registration event, ", data);
     });
-
     app.push.on('notification', function(data){
       console.log("push.notification event, ", data);
       if(data.hasOwnProperty("additionalData")) {
         console.log("background message got: ",data.additionalData);
-        window.localStorage.setItem("contentAvailable", data.additionalData["data"]);
+        //window.localStorage.setItem("contentAvailable", data.additionalData.data);
         var req=new app.HttpClient();
-        req.get("https://jsonplaceholder.typicode.com/todos/"+String(Math.ceil(Math.random()*10)),function(response) {
-          console.log("got a http response", response);
-          window.localStorage.setItem("latinate task",response.title);
-        } );
+        req.get("https://jsonplaceholder.typicode.com/todos/"+String(Math.ceil(Math.random()*10)),
+                function(response) {
+                  console.log("got a http response", response);
+                  window.localStorage.setItem("latinate task",response.title);
+                } );
       }
     });
 
