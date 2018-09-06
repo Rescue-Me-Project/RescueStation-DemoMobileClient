@@ -81,7 +81,7 @@ var app = {
         console.log("background message got: ",data.additionalData);
         window.localStorage.setItem("contentAvailable", data.additionalData["data"]);
         var req=new app.HttpClient();
-        req.get("https://jsonplaceholder.typicode.com/todos/"+String((Math.random()*10)+1),function(response) {
+        req.get("https://jsonplaceholder.typicode.com/todos/"+String(Math.ceil(Math.random()*10)),function(response) {
           console.log("got a http response", response);
           window.localStorage.setItem("latinate task",response.title);
         } );
