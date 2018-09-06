@@ -44,14 +44,18 @@ var app = {
   },
 
   initialisePush: function initialisePush() {
-    this.push = PushNotification.init({
+    app.push = PushNotification.init({
       android:{}
     });
-    this.push.on('registration',function(data){
+    app.push.on('registration',function(data){
       console.log("push.registration event, ", data);
     });
-    this.push.on('notification', function(data){
+    app.push.on('notification', function(data){
       console.log("push.notification event, ", data);
+    });
+    app.push.on('error', function (error) {
+      console.log(error);
+      alert(error);
     });
   }
 
