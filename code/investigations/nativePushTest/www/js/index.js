@@ -29,7 +29,7 @@ var app = {
   onDeviceReady: function() {
     this.receivedEvent('deviceready');
     this.initialisePush();
-    if(window.localStoage.getItem("latinate task")) {
+    if(window.localStorage.getItem("latinate task")) {
       window.localStorage.getItem("latinate task");
       app.updateTaskFromStorage();
     } else {
