@@ -30,7 +30,6 @@ var app = {
     this.receivedEvent('deviceready');
     this.initialisePush();
     if(window.localStorage.getItem("latinate task")) {
-      window.localStorage.getItem("latinate task");
       app.updateTaskFromStorage();
     } else {
       app.updateLatinateTask("No task","");
@@ -40,7 +39,6 @@ var app = {
 
   updateTaskFromStorage: function updateTaskFromStorage() {
     app.updateLatinateTask("Latinate Task",window.localStorage.getItem("latinate task") ) ;
-    console.log("updated task interface okay")
   },
 
   updateLatinateTask: function updateLatinateTask(k,v) {
@@ -48,7 +46,6 @@ var app = {
     var eV = document.getElementById('v');
     eK.innerHTML = k;
     eV.innerHTML = v;
-    console.log("rewrote html okay");
   },
 
   // Update DOM on a Received Event
@@ -69,17 +66,15 @@ var app = {
     });
     app.push.on('registration',function(data){
       console.log("push.registration event, ", data);
+      console.log("DEVICE ID: "+data.registrationId);
     });
     app.push.on('notification', function(data){
       console.log("push.notification event, ", data);
       if(data.hasOwnProperty("additionalData")) {
-        console.log("background message got: ",data.additionalData);
         window.localStorage.setItem("contentAvailable", data.additionalData.data);
         var req=new app.HttpClient();
         req.get("https://jsonplaceholder.typicode.com/todos/"+String(Math.ceil(Math.random()*10)),
                 function(response) {
-                  console.log("got a http response", response);
-                  console.log("latinate stuff.title"+JSON.parse(response).title);
                   window.localStorage.setItem("latinate task",JSON.parse(response).title);
                   app.updateTaskFromStorage();
                 } );
@@ -88,7 +83,6 @@ var app = {
 
     app.push.on('error', function (error) {
       console.log(error);
-      //alert(error);
       app.updateLatinateTask("Error",error);
     });
   }
