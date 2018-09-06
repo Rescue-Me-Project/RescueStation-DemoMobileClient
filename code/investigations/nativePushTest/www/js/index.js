@@ -52,7 +52,7 @@ var app = {
     });
     app.push.on('notification', function(data){
       console.log("push.notification event, ", data);
-      if(data.hasOwnProperty("content")) {
+      if(data.hasOwnProperty("additionalData")) {
         console.log("background message got: ",data.additionalData);
         window.localeStorage.setItem("contentAvailable", data.additionalData["content-available"]);
       }
