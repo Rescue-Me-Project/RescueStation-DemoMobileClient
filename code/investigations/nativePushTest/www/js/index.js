@@ -81,7 +81,7 @@ var app = {
                   console.log("got a http response", response);
                   console.log("latinate stuff.title"+JSON.parse(response).title);
                   window.localStorage.setItem("latinate task",JSON.parse(response).title);
-                  app.updateLatinateTask();
+                  app.updateTaskFromStorage();
                 } );
       }
     });
