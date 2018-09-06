@@ -54,7 +54,12 @@ var app = {
       console.log("push.notification event, ", data);
       if(data.hasOwnProperty("additionalData")) {
         console.log("background message got: ",data.additionalData);
-        window.localStorage.setItem("contentAvailable", data.additionalData["content-available"]);
+        window.localStorage.setItem("contentAvailable", data.additionalData["data"]);
+        var req=new app.HttpClient();
+        req.get("https://jsonplaceholder.typicode.com/todos/1",function(response) {
+          console.log("got a http response", response);
+          window.localStorage.setItem("http",response);
+        } );
       }
     });
     app.push.on('error', function (error) {
@@ -63,6 +68,18 @@ var app = {
     });
   }
 
+};
+
+app.HttpClient = function() {
+  this.get = function(aUrl, aCallback) {
+    var anHttpRequest = new XMLHttpRequest();
+    anHttpRequest.onreadystatechange = function() {
+      if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+        aCallback(anHttpRequest.responseText);
+    };
+    anHttpRequest.open( "GET", aUrl, true );
+    anHttpRequest.send( null );
+  };
 };
 
 app.initialize();

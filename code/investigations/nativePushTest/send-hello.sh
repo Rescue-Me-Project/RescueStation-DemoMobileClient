@@ -12,7 +12,8 @@ if (($# >= 4)); then
 
 		if(($# == 5)); then
 
-			payload="{\"to\":\"$2\",\"data\":{\"title\":\"$3\",\"message\":\"$4\",\"foreground\":\"false\",\"coldstart\":\"true\",\"content-available\":\"1\",\"message\":\"$5\"},\"priority\":\"high\"}"
+			# having content-available:1 is *critical* to make background messages happen on android
+			payload="{\"to\":\"$2\",\"data\":{\"title\":\"$3\",\"message\":\"$4\",\"foreground\":\"false\",\"coldstart\":\"true\",\"content-available\":\"1\",\"data\":\"$5\"},\"priority\":\"high\"}"
 
 		fi
 		
