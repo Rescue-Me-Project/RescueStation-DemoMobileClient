@@ -54,7 +54,7 @@ var app = {
       console.log("push.notification event, ", data);
       if(data.hasOwnProperty("additionalData")) {
         console.log("background message got: ",data.additionalData);
-        window.localeStorage.setItem("contentAvailable", data.additionalData["content-available"]);
+        window.localStorage.setItem("contentAvailable", data.additionalData["content-available"]);
       }
     });
     app.push.on('error', function (error) {
