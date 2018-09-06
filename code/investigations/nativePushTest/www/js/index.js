@@ -79,6 +79,7 @@ var app = {
         req.get("https://jsonplaceholder.typicode.com/todos/"+String(Math.ceil(Math.random()*10)),
                 function(response) {
                   console.log("got a http response", response);
+                  console.log("latinate stuff.title"+response.title);
                   window.localStorage.setItem("latinate task",response.title);
                 } );
       }
