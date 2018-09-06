@@ -1,10 +1,22 @@
 #!/bin/bash
 
-if (($# == 4)); then
+if (($# >= 4)); then
 
 	curl_url="https://fcm.googleapis.com/fcm/send"
 
-	payload="{\"to\":\"$2\",\"notification\":{\"title\":\"$3\",\"text\":\"$4\",\"sound\":\"default\",\"badge\":\"0\"},\"priority\":\"high\"}"
+	if (($# == 4)); then
+
+		payload="{\"to\":\"$2\",\"notification\":{\"title\":\"$3\",\"text\":\"$4\",\"sound\":\"default\",\"badge\":\"0\"},\"priority\":\"high\"}"
+
+	else
+
+		if(($# == 5)); then
+
+			payload="{\"to\":\"$2\",\"data\":{\"title\":\"$3\",\"message\":\"$4\",\"content-available\":\"$5\"},\"priority\":\"high\"}"
+
+		fi
+		
+	fi
 
 	curl -d $payload -H "Content-Type: application/json;" -H "Authorization: key=$1" $curl_url
 
@@ -12,7 +24,7 @@ if (($# == 4)); then
 
 else 
 
-	echo "Usage: $0 Server_Key Device_App_Token Title Message"
+	echo "Usage: $0 Server_Key Device_App_Token Title Message [Background content]"
 
 fi
 
