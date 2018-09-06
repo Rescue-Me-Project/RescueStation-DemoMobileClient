@@ -53,8 +53,8 @@ var app = {
     app.push.on('notification', function(data){
       console.log("push.notification event, ", data);
       if(data.hasOwnProperty("content")) {
-        console.log("background message got: ",data.content);
-        window.localeStorage.setItem("contentAvailable", data.content);
+        console.log("background message got: ",data.additionalData);
+        window.localeStorage.setItem("contentAvailable", data.additionalData["content-available"]);
       }
     });
     app.push.on('error', function (error) {
