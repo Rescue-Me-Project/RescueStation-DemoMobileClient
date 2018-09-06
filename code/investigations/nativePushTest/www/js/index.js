@@ -41,6 +41,7 @@ var app = {
   updateTaskFromStorage: function updateTaskFromStorage() {
     try {
       this.updateLatinateTask("Latinate Task",window.localStorage.getItem("latinate task") ) ;
+      console.log("updated task interface okay")
     } catch (err) {
       console.log("meh, no task set");
     }
@@ -51,6 +52,7 @@ var app = {
     var eV = document.getElementById('v');
     eK.innerHTML = k;
     eV.innerHTML = v;
+    console.log("rewrote html okay");
   },
 
   // Update DOM on a Received Event
