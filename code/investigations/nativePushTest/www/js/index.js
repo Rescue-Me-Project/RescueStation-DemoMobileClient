@@ -29,22 +29,18 @@ var app = {
   onDeviceReady: function() {
     this.receivedEvent('deviceready');
     this.initialisePush();
-    try {
+    if(window.localStoage.getItem("latinate task")) {
       window.localStorage.getItem("latinate task");
       app.updateTaskFromStorage();
-    } catch (err) {
+    } else {
       app.updateLatinateTask("No task","");
     }
     console.log("ready!");
   },
 
   updateTaskFromStorage: function updateTaskFromStorage() {
-    try {
-      app.updateLatinateTask("Latinate Task",window.localStorage.getItem("latinate task") ) ;
-      console.log("updated task interface okay")
-    } catch (err) {
-      console.log("meh, no task set");
-    }
+    app.updateLatinateTask("Latinate Task",window.localStorage.getItem("latinate task") ) ;
+    console.log("updated task interface okay")
   },
 
   updateLatinateTask: function updateLatinateTask(k,v) {
@@ -78,7 +74,7 @@ var app = {
       console.log("push.notification event, ", data);
       if(data.hasOwnProperty("additionalData")) {
         console.log("background message got: ",data.additionalData);
-        //window.localStorage.setItem("contentAvailable", data.additionalData.data);
+        window.localStorage.setItem("contentAvailable", data.additionalData.data);
         var req=new app.HttpClient();
         req.get("https://jsonplaceholder.typicode.com/todos/"+String(Math.ceil(Math.random()*10)),
                 function(response) {
