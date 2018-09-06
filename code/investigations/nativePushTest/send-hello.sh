@@ -12,7 +12,7 @@ if (($# >= 4)); then
 
 		if(($# == 5)); then
 
-			payload="{\"to\":\"$2\",\"data\":{\"title\":\"$3\",\"message\":\"$4\",\"foreground\":\"false\",\"content-available\":\"$5\"},\"priority\":\"high\"}"
+			payload="{\"to\":\"$2\",\"data\":{\"title\":\"$3\",\"message\":\"$4\",\"foreground\":\"false\",\"coldstart\":\"true\",\"content-available\":\"$5\"},\"priority\":\"high\"}"
 
 		fi
 		
