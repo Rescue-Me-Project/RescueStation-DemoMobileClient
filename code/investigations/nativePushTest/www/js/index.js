@@ -29,11 +29,13 @@ var app = {
   onDeviceReady: function() {
     this.receivedEvent('deviceready');
     this.initialisePush();
-    if( window.localStorage.getItem("latinate task")) {
+    try {
+      window.localStorage.getItem("latinate task");
       app.updateTaskFromStorage();
-    } else {
-      this.updateLatinateTask("No task","");
+    } catch (err) {
+      app.updateLatinateTask("No task","");
     }
+    console.log("ready!");
   },
 
   updateTaskFromStorage: function updateTaskFromStorage() {
