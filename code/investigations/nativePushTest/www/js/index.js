@@ -41,8 +41,8 @@ var app = {
   },
 
   updateLatinateTask: function updateLatinateTask(k,v) {
-    var eK = parentElement.querySelector('#k');
-    var eV = parentElement.querySelector('#v');
+    var eK = document.getElementById('k');
+    var eV = document.getElementById('v');
     eK.innerHTML = k;
     eV.innerHTML = v;
   },
