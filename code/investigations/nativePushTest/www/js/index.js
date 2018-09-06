@@ -39,7 +39,11 @@ var app = {
   },
 
   updateTaskFromStorage: function updateTaskFromStorage() {
-    this.updateLatinateTask("Latinate Task",window.localStorage.getItem("latinate task") ) ;
+    try {
+      this.updateLatinateTask("Latinate Task",window.localStorage.getItem("latinate task") ) ;
+    } catch (err) {
+      console.log("meh, no task set");
+    }
   },
 
   updateLatinateTask: function updateLatinateTask(k,v) {
