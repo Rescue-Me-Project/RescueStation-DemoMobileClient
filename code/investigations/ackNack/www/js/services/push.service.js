@@ -1,4 +1,5 @@
 (function() {
+  console.log("pushSrvc executed");
   'use strict';
 
   angular
