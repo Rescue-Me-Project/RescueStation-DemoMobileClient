@@ -10,7 +10,7 @@
     '$scope',
     '$state',
     '$sce',
-    'push'
+    'pushSrvc'
   ];
 
   function mainCtrl(

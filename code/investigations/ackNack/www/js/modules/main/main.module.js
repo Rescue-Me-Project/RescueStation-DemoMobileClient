@@ -5,7 +5,7 @@ console.log("main.module.js invoked");
   angular
     .module('main', [
       //      'ionic'
-      'pushSrvc'
+      'push'
     ])
     .config(function($stateProvider){
       $stateProvider
