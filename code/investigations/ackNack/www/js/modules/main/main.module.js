@@ -12,7 +12,7 @@ console.log("main.module.js invoked");
         .state('main', {
           url: '/main',
           xyztemplate: '<h1>HELLO</h1>',
-          templateUrl: 'modules/main/main.html',
+          templateUrl: 'js/modules/main/main.html',
           controller: 'mainCtrl as vm'
         });
     });
