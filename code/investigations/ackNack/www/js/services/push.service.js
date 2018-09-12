@@ -41,17 +41,17 @@
       });
       service.push.on('notification', function(data){
         console.log("push.notification event, ", data);
+        registeredCallback( data );
       });
 
-      app.push.on('error', function (error) {
+      service..push.on('error', function (error) {
         console.log(error);
-        app.updateLatinateTask("Error",error);
       });
     };
 
     service.setCallback = function setCallback( handler ) {
       service.callbackHandler = handler;
-    }
+    };
 
     return service;
   }
