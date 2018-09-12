@@ -3,7 +3,7 @@
 
   angular
     .module('main', [ '' ])
-    .factory('push', pushSrvc)
+    .factory('pushSrvc', pushSrvc)
   ;
 
   pushSrvc.$inject = [
@@ -13,7 +13,7 @@
 //    '$http',
 //    'theurbanwild'
   ];
-  function speciesSrvc(
+  function pushSrvc(
 //    $q,
 //    $timeout,
 //    $sce,
