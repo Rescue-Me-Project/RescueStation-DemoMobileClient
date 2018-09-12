@@ -1,6 +1,6 @@
 (function() {
-  console.log("pushSrvc executed");
   'use strict';
+  console.log("pushSrvc executed");
 
   angular
     .module('main')
@@ -23,8 +23,8 @@
   ) {
     var service = {};
 
+    service.push = undefined;
     service.registrationId = undefined;
-
     service.callbackHandler = undefined;
 
     service.initialisePush = function initialisePush( registeredCallback, messageCallback ) {
@@ -45,7 +45,7 @@
         service.callbackHandler( data );
       });
 
-      service..push.on('error', function (error) {
+      service.push.on('error', function (error) {
         console.log(error);
       });
     };
