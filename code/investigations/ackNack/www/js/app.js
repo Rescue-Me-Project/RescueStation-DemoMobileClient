@@ -5,8 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', [
   'ionic',
-  'momentjs', // ADDED used for dates
-  'eventsjs'  // ADDED our events module
+//  'momentjs', // ADDED used for dates
+//  'eventsjs'  // ADDED our events module
 ])
 
   .run(function ($ionicPlatform, $state, $rootScope) {
@@ -28,8 +28,8 @@ angular.module('starter', [
         StatusBar.styleDefault();
       }
       // ADDED START
-      $state.go("events_list");
+      $state.go("main");
       // ADDED END
 
     });
-  })
+  });
