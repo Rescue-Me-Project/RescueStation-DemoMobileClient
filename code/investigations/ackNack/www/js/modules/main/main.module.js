@@ -4,7 +4,7 @@ console.log("main.module.js invoked");
 
   angular
     .module('main', [
-      'ionic'
+//      'ionic'
     ])
     .config(function($stateProvider){
       $stateProvider
