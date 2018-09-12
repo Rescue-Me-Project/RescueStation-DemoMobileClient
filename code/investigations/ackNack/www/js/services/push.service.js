@@ -23,11 +23,12 @@
     var service = {};
 
     service.registrationId = undefined;
+
     service.callbackHandler = undefined;
 
     // methods as per https://trello.com/c/3sLYXMgq/64-species-service
 
-    service.initialisePush = function initialisePush( registeredCallback ) {
+    service.initialisePush = function initialisePush( registeredCallback, messageCallback ) {
       service.push = PushNotification.init({
         android:{}
       });
@@ -36,12 +37,13 @@
         console.log("DEVICE ID: "+data.registrationId);
         service.registrationId = data.registrationId;
         if( registeredCallback !== undefined ) {
+          service.setCallback( messageCallback );
           registeredCallback( data );
         }
       });
       service.push.on('notification', function(data){
         console.log("push.notification event, ", data);
-        registeredCallback( data );
+        service.callbackHandler( data );
       });
 
       service..push.on('error', function (error) {

@@ -10,7 +10,7 @@
     '$scope',
     '$state',
     '$sce',
-    'push'
+    'pushSrvc'
   ];
 
   function mainCtrl(
@@ -41,15 +41,15 @@
     vm.pushConnected = false;
     vm.deviceId = "";
 
-    vm.push = push.initialisePush( function deviceNowConnected(data){
-      // data.deviceId contains the device ID, hopefully
+    pushSrvc.initialisePush( function deviceNowConnected(data){
+      // data.deviceId contains the device ID, hopefully, on a registration message
       if (data.hasOwnProperty('deviceId')===true) {
         vm.deviceId = data.deviceId;
         vm.pushConnected = true;
       }
-    } );
+    }, vm.handleInbound );
 
-    vm.push.setCallback( vm.handleInbound );
+    pushSrvc.setCallback( vm.handleInbound );
 
     vm.setRescuer = function setRescuer( newState ) {
       vm.isRescuer = newState;
@@ -58,6 +58,10 @@
     vm.setRescuee = function setRescuee( newState ) {
       vm.isRescuer = !newState;
       vm.isRescuee = newState;
+    };
+
+    vm.handleInbound = function handleInbound( data ) {
+      console.log("got inbound message", data)
     };
 
   }
