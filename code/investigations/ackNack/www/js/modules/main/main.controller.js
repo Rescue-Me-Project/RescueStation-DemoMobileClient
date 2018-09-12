@@ -18,7 +18,7 @@
     $scope,
     $state,
     $sce,
-    push
+    pushSrvc
   ) {
 
 /*   angular.element(document).bind('keyup', function(e) {
