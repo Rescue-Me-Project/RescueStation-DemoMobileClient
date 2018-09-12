@@ -12,7 +12,8 @@ console.log("main.module.js invoked");
           url: '/main',
           resolve: {
           },
-          templateUrl: 'js/modules/main/main.html',
+          template: '<h1>HELLO</h1>',
+          x_templateUrl: 'main/main.html',
           controller: 'mainCtrl as vm'
         });
     });
