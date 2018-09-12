@@ -4,14 +4,15 @@ console.log("main.module.js invoked");
 
   angular
     .module('main', [
-//      'ionic'
+      //      'ionic'
+      'pushSrvc'
     ])
     .config(function($stateProvider){
       $stateProvider
         .state('main', {
           url: '/main',
-          template: '<h1>HELLO</h1>',
-          x_templateUrl: 'main/main.html',
+          xyztemplate: '<h1>HELLO</h1>',
+          templateUrl: 'main/main.html',
           controller: 'mainCtrl as vm'
         });
     });
