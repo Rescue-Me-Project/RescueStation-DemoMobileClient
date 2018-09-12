@@ -26,8 +26,6 @@
 
     service.callbackHandler = undefined;
 
-    // methods as per https://trello.com/c/3sLYXMgq/64-species-service
-
     service.initialisePush = function initialisePush( registeredCallback, messageCallback ) {
       service.push = PushNotification.init({
         android:{}
