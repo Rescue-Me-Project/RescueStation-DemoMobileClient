@@ -12,7 +12,7 @@ console.log("main.module.js invoked");
           url: '/main',
           resolve: {
           },
-          templateUrl: 'modules/main/main.html',
+          templateUrl: 'js/modules/main/main.html',
           controller: 'mainCtrl as vm'
         });
     });
