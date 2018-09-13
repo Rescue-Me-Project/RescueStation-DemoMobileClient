@@ -8,18 +8,12 @@
   ;
 
   pushSrvc.$inject = [
-//    '$q',
-//    '$timeout',
-//    '$sce',
-//    '$http',
-//    'theurbanwild'
+    '$http',
+    '$cordovaPushV5'
   ];
   function pushSrvc(
-//    $q,
-//    $timeout,
-//    $sce,
-//    $http,
-//    theurbanwild
+    $http,
+    $cordovaPushV5
   ) {
     var service = {};
 
@@ -28,11 +22,41 @@
     service.callbackHandler = undefined;
     service.cordovaReady = false;
 
+    service.options = {};
+
     document.addEventListener("deviceready", function () {
       service.cordovaReady = true;
     }, false);
 
     service.initialisePush = function initialisePush( registeredCallback, messageCallback ) {
+      $cordovaPushV5.initialize(service.options).then(function(){
+
+        $cordovaPushV5.onNotification();
+        $cordovaPushV5.onError();
+
+        $cordovaPushV5.register().then(
+          function registeredOkay( registrationId ) {
+            service.registrationId = registrationId;
+            if( messageCallback ) {
+              service.callbackHandler = messageCallback;
+            }
+            if(registeredCallback) {
+              registeredCallback( registrationId );
+            }
+          }
+        );
+      });
+
+      $rootScope.on('$cordovaPushV5:notificationReceived', function pushGotNotificationHandler(event, data) {
+        // data.[message|title|count|sound|image|additionalData]
+        console.log( "pushv5 got inbound message: ", event, data);
+        if(service.callbackHandler) {
+          service.callbackHandler( data );
+        }
+      });
+
+/*
+
       service.push = PushNotification.init({
         android:{}
       });
@@ -58,7 +82,7 @@
     service.setCallback = function setCallback( handler ) {
       service.callbackHandler = handler;
     };
-
+*/
     return service;
   }
 
