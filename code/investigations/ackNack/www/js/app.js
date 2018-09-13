@@ -28,6 +28,11 @@ angular.module('starter', [
       if (window.StatusBar) {
         StatusBar.styleDefault();
       }
+      console.log("window:", window);
+      console.log("_window:", _window);
+      console.log("window():", window());
+      console.log("_window():", _window());
+
       // ADDED START
       $state.go("main");
       // ADDED END
