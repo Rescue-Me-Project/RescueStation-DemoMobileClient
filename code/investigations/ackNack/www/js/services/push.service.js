@@ -10,10 +10,12 @@
     ;
 
     pushSrvc.$inject = [
+      '$rootScope',
       '$http',
       '$cordovaPushV5'
     ];
     function pushSrvc(
+      $rotScope,
       $http,
       $cordovaPushV5
     ) {
