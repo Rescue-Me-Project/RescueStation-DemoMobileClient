@@ -3,7 +3,7 @@
   console.log("pushSrvc executed");
 
   angular
-    .module('push', [])
+    .module('push', [ 'ngCordova' ] )
     .factory('pushSrvc', pushSrvc)
   ;
 
@@ -26,6 +26,11 @@
     service.push = undefined;
     service.registrationId = undefined;
     service.callbackHandler = undefined;
+    service.cordovaReady = false;
+
+    document.addEventListener("deviceready", function () {
+      service.cordovaReady = true;
+    }, false);
 
     service.initialisePush = function initialisePush( registeredCallback, messageCallback ) {
       service.push = PushNotification.init({
