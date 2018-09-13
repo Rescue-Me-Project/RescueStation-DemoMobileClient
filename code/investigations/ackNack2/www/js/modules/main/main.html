@@ -1,0 +1,24 @@
+<!-- <section>
+  <div id="quizbox" class="">
+    <div id="subtitle" class="ssib">
+      <h4 class="animated slideInRight">ackNack</configtxt></h4>
+    </div>
+    <div id="intro-text" class="animated slideInRight">
+      
+    </div>
+  </div>
+</section> -->
+
+<!-- orange: rescuee -->
+<!-- green: rescuer -->
+<ion-view>
+  <div id="not-connected" ng-show="!vm.pushConnected">Connecting...</div>
+  <div id="connected" ng-show="vm.pushConnected">
+    <p>Connected.</p>
+    <p>ID:{{vm.deviceId}}</p>
+    <div id="role-buttons">
+      <button ion-button round ng-class="{'button-positive': vm.isRescuer===true}" ng-press="vm.setRescuer(true);">Rescuer</button>
+      <button ion-button round ng-class="{'button-positive': vm.isRescuee===true}" ng-press="vm.setRescuee(true);">Rescuee</button>
+    </div>
+  </div>
+</ion-view>

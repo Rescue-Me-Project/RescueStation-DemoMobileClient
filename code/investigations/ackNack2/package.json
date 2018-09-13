@@ -1,0 +1,22 @@
+{
+  "name": "uk.ac.mmu.digitallabs.rs.acknack",
+  "displayName": "ackNack2",
+  "version": "1.0.0",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "phonegap-plugin-barcodescanner": "^8.0.0",
+    "phonegap-plugin-push": "^2.2.1"
+  },
+  "cordova": {
+    "plugins": {
+      "phonegap-plugin-barcodescanner": {},
+      "phonegap-plugin-push": {}
+    }
+  }
+}
