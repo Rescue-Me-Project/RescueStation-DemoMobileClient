@@ -54,35 +54,8 @@
           service.callbackHandler( data );
         }
       });
-
-/*
-
-      service.push = PushNotification.init({
-        android:{}
-      });
-      service.push.on('registration',function(data){
-        console.log("push.registration event, ", data);
-        console.log("DEVICE ID: "+data.registrationId);
-        service.registrationId = data.registrationId;
-        if( registeredCallback !== undefined ) {
-          service.setCallback( messageCallback );
-          registeredCallback( data );
-        }
-      });
-      service.push.on('notification', function(data){
-        console.log("push.notification event, ", data);
-        service.callbackHandler( data );
-      });
-
-      service.push.on('error', function (error) {
-        console.log(error);
-      });
     };
 
-    service.setCallback = function setCallback( handler ) {
-      service.callbackHandler = handler;
-    };
-*/
     return service;
   }
 
