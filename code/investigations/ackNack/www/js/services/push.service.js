@@ -65,7 +65,7 @@ window.FCMKEY = "AIzaSyCDtz2rQtSs-ZgGvNgvehdmd4t8wpSlLqY";
       $http.post('https://fcm.googleapis.com/fcm/send',
                  encodedPayload,
                  {'Content-Type':'application/json',
-                  'Authorization':'key='+Window.FCMKEY}).then(
+                  'Authorization':'key='+window.FCMKEY}).then(
                     function success(result) {
                       console.log('POSTED SUCCESS', result);
                     },
