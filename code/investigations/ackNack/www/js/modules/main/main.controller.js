@@ -92,7 +92,7 @@
     };
 
     vm.handleInbound = function handleInbound( data ) {
-      console.log("got inbound message", data)
+      console.log("got inbound message", data);
     };
 
   }
