@@ -62,7 +62,7 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
         'priority': 'high'
       });
       var headers = {
-        'Content-Type':'application/json',
+        'Content-Type':'application/json;',
         'Authorization':'key='+window.FCMKEY
       };
       console.log("sending "+encodedPayload);
