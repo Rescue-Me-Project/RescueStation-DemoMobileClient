@@ -15,3 +15,23 @@ Now using plugin set:
 * phonegap-plugin-barcodescanner 8.0.0 "BarcodeScanner"
 * phonegap-plugin-push 2.2.1 "PushPlugin"
 
+
+---------
+
+more build problems - push plugin being skipped
+
+
+https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/INSTALLATION.md
+fix: https://github.com/phonegap/phonegap-plugin-push/issues/2229#issuecomment-369921541
+
+```
+I lost some time trying to find the right project.properties. 😄
+
+So it's in platforms/android/project.properties that you should remove
+
+cordova.system.library.3=com.android.support:support-v13:26.+
+or replace it by
+
+cordova.system.library.3=com.android.support:support-v13:27.+
+(but I don't know the difference between the two of them)
+```
