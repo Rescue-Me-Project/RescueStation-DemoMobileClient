@@ -35,3 +35,12 @@ or replace it by
 cordova.system.library.3=com.android.support:support-v13:27.+
 (but I don't know the difference between the two of them)
 ```
+
+QR code generation
+
+- original plugin generates an android 'intent' and pops out to a different application - adding instead
+
+https://github.com/monospaced/angular-qrcode
+
+`npm install angular-qrcode`
+
