@@ -21,4 +21,10 @@
       <button ion-button round ng-class="{'button-positive': vm.isRescuee===true}" ng-press="vm.setRescuee(true);">Rescuee</button>
     </div>
   </div>
-</ion-view>
+  <div ng-show="vm.isRescuer">
+    <h3>Rescuer</h3>
+    <img ng-src="vm.barcode" />
+  </div>
+  <div ng-show="vm.isRescuer">
+    <h3>Rescuee</h3>
+  </div></ion-view>

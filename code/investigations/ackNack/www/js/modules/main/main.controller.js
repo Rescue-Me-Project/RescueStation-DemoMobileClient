@@ -55,6 +55,18 @@
     vm.setRescuer = function setRescuer( newState ) {
       vm.isRescuer = newState;
       vm.isRescuee = !newState;
+
+      cordova.plugins.barcodeScanner.encode(
+        cordova.plugins.barcodeScanner.Encode.TEXT_TYPE,
+        vm.deviceId,
+        function success( data ) {
+          // barcode is in data.file (type is data.format)
+          vm.barcode =  data.file;
+        },
+        function fail(fail) {
+          console.log(fail);
+        }
+      );
     };
     vm.setRescuee = function setRescuee( newState ) {
       vm.isRescuer = !newState;
