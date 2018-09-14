@@ -1,66 +1,4 @@
-/*
-(function() {
-  'use strict';
-  console.log("pushSrvc executed");
-
-    angular
-      .module('push', [ 'ngCordova' ] )
-      .factory('pushSrvc', pushSrvc)
-    ;
-
-    pushSrvc.$inject = [
-      '$rootScope',
-      '$http',
-      '$cordovaPushV5'
-    ];
-    function pushSrvc(
-      $rootScope,
-      $http,
-      $cordovaPushV5
-    ) {
-      var service = {};
-
-      service.push = undefined;
-      service.registrationId = undefined;
-      service.callbackHandler = undefined;
-      service.cordovaReady = false;
-
-      service.options = {};
-
-      service.initialisePush = function initialisePush( registeredCallback, messageCallback ) {
-        $cordovaPushV5.initialize(service.options).then(function(){
-
-          $cordovaPushV5.onNotification();
-          $cordovaPushV5.onError();
-
-          $cordovaPushV5.register().then(
-            function registeredOkay( registrationId ) {
-              service.registrationId = registrationId;
-              if( messageCallback ) {
-                service.callbackHandler = messageCallback;
-              }
-              if(registeredCallback) {
-                registeredCallback( registrationId );
-              }
-            }
-          );
-        });
-
-        $rootScope.on('$cordovaPushV5:notificationReceived', function pushGotNotificationHandler(event, data) {
-          // data.[message|title|count|sound|image|additionalData]
-          console.log( "pushv5 got inbound message: ", event, data);
-          if(service.callbackHandler) {
-            service.callbackHandler( data );
-          }
-        });
-      };
-
-      return service;
-    }
-//  }, false);
-
-})();
-*/
+window.FCMKEY = "AIzaSyCDtz2rQtSs-ZgGvNgvehdmd4t8wpSlLqY";
 
 (function() {
   'use strict';
@@ -75,15 +13,13 @@
 //    '$q',
 //    '$timeout',
 //    '$sce',
-//    '$http',
-//    'theurbanwild'
+    '$http'
   ];
   function pushSrvc(
 //    $q,
 //    $timeout,
 //    $sce,
-//    $http,
-//    theurbanwild
+    $http,
   ) {
     var service = {};
 
@@ -91,7 +27,7 @@
     service.registrationId = undefined;
     service.callbackHandler = undefined;
 
-    service.initialisePush = function initialisePush( registeredCallback, messageCallback ) {
+    service.initialisePush = function initialisePush( registeredCallback ) {
       service.push = PushNotification.init({
         android:{}
       });
@@ -112,6 +48,31 @@
       service.push.on('error', function (error) {
         console.log(error);
       });
+    };
+
+    service.send = function send( recipient, title,  payload ) {
+      var encodedPayload = JSON.stringify({
+        'to': recipient,
+        'title': title,
+        'message': payload,
+        'foreground': 'false',
+        'coldstart': 'true',
+        'content-available': '1',
+        'data': payload,
+        'priority': 'high'
+      });
+      console.log("sending "+encodedPayload);
+      $http.post('https://fcm.googleapis.com/fcm/send',
+                 encodedPayload,
+                 {'Content-Type':'application/json',
+                  'Authorization':'key='+Window.FCMKEY}).then(
+                    function success(result) {
+                      console.log('POSTED SUCCESS', result);
+                    },
+                    function fail( error ) {
+                      console.log("POSTED WITH PROVISIOS", error);
+                    }
+                  );
     };
 
     service.setCallback = function setCallback( handler ) {
