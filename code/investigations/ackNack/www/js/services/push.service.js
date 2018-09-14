@@ -61,18 +61,21 @@ window.FCMKEY = "AIzaSyCDtz2rQtSs-ZgGvNgvehdmd4t8wpSlLqY";
         'data': payload,
         'priority': 'high'
       });
+      var headers = {
+        'Content-Type':'application/json',
+        'Authorization':'key='+window.FCMKEY
+      };
       console.log("sending "+encodedPayload);
       $http.post('https://fcm.googleapis.com/fcm/send',
                  encodedPayload,
-                 {'Content-Type':'application/json',
-                  'Authorization':'key='+window.FCMKEY}).then(
-                    function success(result) {
-                      console.log('POSTED SUCCESS', result);
-                    },
-                    function fail( error ) {
-                      console.log("POSTED WITH PROVISIOS", error);
-                    }
-                  );
+                 headers ).then(
+                   function success(result) {
+                     console.log('POSTED SUCCESS', result);
+                   },
+                   function fail( error ) {
+                     console.log("POSTED WITH PROVISIOS", error);
+                   }
+                 );
     };
 
     service.setCallback = function setCallback( handler ) {
