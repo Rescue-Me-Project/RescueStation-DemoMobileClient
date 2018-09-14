@@ -2,8 +2,7 @@
   'use strict';
   console.log("pushSrvc executed");
 
-
-  document.addEventListener("deviceready", function () {
+//  document.addEventListener("deviceready", function () {
 
 //    $rootScope.$on('ionic-cordova-push-ready', function(){
 //      console.log("all ready");
@@ -67,6 +66,6 @@
 
       return service;
     }
-  }, false);
+//  }, false);
 
 })();
