@@ -2,6 +2,10 @@
   'use strict';
   console.log("pushSrvc executed");
 
+  $scope.$on('google-maps-ready', function(){
+    console.log("all ready");
+  });
+
   document.addEventListener("deviceready", function () {
 
     angular
