@@ -2,7 +2,7 @@
   'use strict';
   console.log("pushSrvc executed");
 
-  $scope.$on('google-maps-ready', function(){
+  $scope.$on('ionic-cordova-push-ready', function(){
     console.log("all ready");
   });
 
@@ -19,7 +19,7 @@
       '$cordovaPushV5'
     ];
     function pushSrvc(
-      $rotScope,
+      $rootScope,
       $http,
       $cordovaPushV5
     ) {
