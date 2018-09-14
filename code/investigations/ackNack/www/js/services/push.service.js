@@ -67,7 +67,7 @@
   console.log("pushSrvc executed");
 
   angular
-    .module('main')
+    .module('main', [])
     .factory('pushSrvc', pushSrvc)
   ;
 
