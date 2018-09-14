@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('main', [ ngQrcode ] )
+    .module('main', [ 'monospaced.qrcode' ] )
     .controller('mainCtrl', mainCtrl);
 
   mainCtrl.$inject = [
@@ -11,7 +11,7 @@
     '$state',
     '$sce',
     'pushSrvc',
-    'monospaced.qrcode'
+    'qrcode'
   ];
 
   function mainCtrl(
@@ -19,7 +19,8 @@
     $scope,
     $state,
     $sce,
-    pushSrvc
+    pushSrvc,
+    qrcode
   ) {
 
 /*   angular.element(document).bind('keyup', function(e) {
