@@ -43,13 +43,14 @@
 
     pushSrvc.initialisePush( function deviceNowConnected(data){
       // data.deviceId contains the device ID, hopefully, on a registration message
-      if (data.hasOwnProperty('deviceId')===true) {
-        vm.deviceId = data.deviceId;
+      if (data.hasOwnProperty('registrationId')===true) {
+        vm.deviceId = data.registrationId;
         vm.pushConnected = true;
       }
-    }, vm.handleInbound );
+      pushSrvc.setCallback( vm.handleInbound );
+    });
 
-    pushSrvc.setCallback( vm.handleInbound );
+
 
     vm.setRescuer = function setRescuer( newState ) {
       vm.isRescuer = newState;
