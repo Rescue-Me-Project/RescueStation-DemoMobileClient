@@ -2,11 +2,12 @@
   'use strict';
   console.log("pushSrvc executed");
 
-  $scope.$on('ionic-cordova-push-ready', function(){
-    console.log("all ready");
-  });
 
   document.addEventListener("deviceready", function () {
+
+    $rootScope.$on('ionic-cordova-push-ready', function(){
+      console.log("all ready");
+    });
 
     angular
       .module('push', [ 'ngCordova' ] )
