@@ -21,22 +21,12 @@
     pushSrvc
   ) {
 
-/*   angular.element(document).bind('keyup', function(e) {
-      $scope.$apply(function(){
-        if (e.key==="Enter") {
-          $state.go('quiz');
-        }
-      });
-    });
-*/
     var vm=angular.extend(this, {
 
     });
 
     vm.isRescuer = false;
     vm.isRescuee = false;
-
-    //vm.isRescuee
 
     vm.pushConnected = false;
     vm.deviceId = "";
@@ -55,7 +45,7 @@
       console.log("setting as rescuer", newState );
       vm.isRescuer = newState;
       vm.isRescuee = !newState;
-
+/*
       cordova.plugins.barcodeScanner.encode(
         cordova.plugins.barcodeScanner.Encode.TEXT_TYPE,
         vm.deviceId,
@@ -67,6 +57,7 @@
           console.log(fail);
         }
       );
+*/
     };
 
     vm.setRescuee = function setRescuee( newState ) {
