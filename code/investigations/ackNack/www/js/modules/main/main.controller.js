@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('main')
+    .module('main', [ ngQrcode ] )
     .controller('mainCtrl', mainCtrl);
 
   mainCtrl.$inject = [
@@ -10,7 +10,8 @@
     '$scope',
     '$state',
     '$sce',
-    'pushSrvc'
+    'pushSrvc',
+    'monospaced.qrcode'
   ];
 
   function mainCtrl(
@@ -51,7 +52,6 @@
     });
 
 
-
     vm.setRescuer = function setRescuer( newState ) {
       console.log("setting as rescuer", newState );
       vm.isRescuer = newState;
@@ -69,9 +69,27 @@
         }
       );
     };
+
     vm.setRescuee = function setRescuee( newState ) {
       vm.isRescuer = !newState;
       vm.isRescuee = newState;
+    };
+
+    vm.rescueeStartCodeScan = function rescueeStartCodeScan() {
+      console.log("starting a QR code scan");
+      cordova.plugins.barcodeScanner.scan(
+        function(result) { // .text .format .cancelled
+          console.log("scanned",result);
+        },
+        function(error) {
+          console.log("error scanning",error);
+        },
+        {
+          showTorchButton: false,
+          saveHistory: false,
+          prompt: "Scan the Rescuer's Code"
+        }
+      );
     };
 
     vm.handleInbound = function handleInbound( data ) {
