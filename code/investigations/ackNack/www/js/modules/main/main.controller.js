@@ -53,6 +53,7 @@
 
 
     vm.setRescuer = function setRescuer( newState ) {
+      console.log("setting as rescuer", newState );
       vm.isRescuer = newState;
       vm.isRescuee = !newState;
 

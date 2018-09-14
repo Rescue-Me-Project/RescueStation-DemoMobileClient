@@ -17,14 +17,14 @@
     <p>Connected.</p>
     <p>ID:{{vm.deviceId}}</p>
     <div id="role-buttons">
-      <button ion-button round ng-class="{'button-positive': vm.isRescuer===true}" ng-press="vm.setRescuer(true);">Rescuer</button>
-      <button ion-button round ng-class="{'button-positive': vm.isRescuee===true}" ng-press="vm.setRescuee(true);">Rescuee</button>
+      <button ion-button round ng-class="{'button-positive': vm.isRescuer===true}" ng-click="vm.setRescuer(true);">Rescuer</button>
+      <button ion-button round ng-class="{'button-positive': vm.isRescuee===true}" ng-click="vm.setRescuee(true);">Rescuee</button>
     </div>
   </div>
   <div ng-show="vm.isRescuer">
     <h3>Rescuer</h3>
     <img ng-src="vm.barcode" />
   </div>
-  <div ng-show="vm.isRescuer">
+  <div ng-show="vm.isRescuee">
     <h3>Rescuee</h3>
   </div></ion-view>
