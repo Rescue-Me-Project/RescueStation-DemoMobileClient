@@ -36,7 +36,7 @@ window.FCMKEY = "AIzaSyCDtz2rQtSs-ZgGvNgvehdmd4t8wpSlLqY";
         console.log("DEVICE ID: "+data.registrationId);
         service.registrationId = data.registrationId;
         if( registeredCallback !== undefined ) {
-          service.setCallback( messageCallback );
+          //service.setCallback( registeredCallback );
           registeredCallback( data );
         }
       });
