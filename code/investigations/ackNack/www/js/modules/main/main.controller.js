@@ -70,7 +70,7 @@
       cordova.plugins.barcodeScanner.scan(
         function(result) { // .text .format .cancelled
           console.log("scanned",result);
-          push.send( result.text, {from:vm.deviceId} );
+          pushSrvc.send( result.text, {from:vm.deviceId} );
         },
         function(error) {
           console.log("error scanning",error);
