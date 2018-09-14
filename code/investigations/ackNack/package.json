@@ -18,9 +18,6 @@
   },
   "cordova": {
     "plugins": {
-      {
-        "locator": "phonegap-plugin-push"
-      }
       "cordova-plugin-whitelist": {},
       "phonegap-plugin-push": {
         "FCM_VERSION": "11.0.1"
@@ -33,5 +30,10 @@
       "browser",
       "android"
     ]
-  }
+  },
+  "cordovaPlugins": [
+    {
+        "locator": "phonegap-plugin-push"
+    }
+  ]
 }
