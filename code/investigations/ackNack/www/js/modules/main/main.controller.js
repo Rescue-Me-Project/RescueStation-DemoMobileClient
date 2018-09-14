@@ -10,8 +10,7 @@
     '$scope',
     '$state',
     '$sce',
-    'pushSrvc',
-    'qrcode'
+    'pushSrvc'
   ];
 
   function mainCtrl(
@@ -19,8 +18,7 @@
     $scope,
     $state,
     $sce,
-    pushSrvc,
-    qrcode
+    pushSrvc
   ) {
 
 /*   angular.element(document).bind('keyup', function(e) {
