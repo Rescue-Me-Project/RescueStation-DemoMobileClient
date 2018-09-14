@@ -29,7 +29,7 @@ angular.module('starter', [
         StatusBar.styleDefault();
       }
       // ask push to start
-      $rootScope.broadcast('ionic-cordova-push-ready');
+      //$rootScope.broadcast('ionic-cordova-push-ready');
       console.log("window:", window);
 
       // ADDED START
