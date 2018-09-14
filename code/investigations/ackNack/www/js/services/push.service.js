@@ -2,12 +2,6 @@
   'use strict';
   console.log("pushSrvc executed");
 
-//  document.addEventListener("deviceready", function () {
-
-//    $rootScope.$on('ionic-cordova-push-ready', function(){
-//      console.log("all ready");
-//    });
-
     angular
       .module('push', [ 'ngCordova' ] )
       .factory('pushSrvc', pushSrvc)
@@ -31,10 +25,6 @@
       service.cordovaReady = false;
 
       service.options = {};
-
-      //    document.addEventListener("deviceready", function () {
-      //      service.cordovaReady = true;
-      //  }, false);
 
       service.initialisePush = function initialisePush( registeredCallback, messageCallback ) {
         $cordovaPushV5.initialize(service.options).then(function(){
