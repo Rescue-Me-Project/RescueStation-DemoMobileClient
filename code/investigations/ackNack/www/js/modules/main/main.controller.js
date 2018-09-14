@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('main', ['monospaced.qrcode'] )
+    .module('main' )
     .controller('mainCtrl', mainCtrl);
 
   mainCtrl.$inject = [
