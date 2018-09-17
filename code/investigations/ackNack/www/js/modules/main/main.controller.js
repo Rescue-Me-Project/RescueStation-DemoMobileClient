@@ -38,6 +38,7 @@
         vm.deviceId = data.registrationId;
         vm.pushConnected = true;
         pushSrvc.setCallback( vm.handleInbound );
+        console.log("-- setting pushSrvc.callback to ",vm.handleInbound );
       }
     });
 
