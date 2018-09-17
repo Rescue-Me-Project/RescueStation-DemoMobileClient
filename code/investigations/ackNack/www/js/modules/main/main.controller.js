@@ -37,8 +37,8 @@
       if (data.hasOwnProperty('registrationId')===true) {
         vm.deviceId = data.registrationId;
         vm.pushConnected = true;
+        pushSrvc.setCallback( vm.handleInbound );
       }
-      pushSrvc.setCallback( vm.handleInbound );
     });
 
 
