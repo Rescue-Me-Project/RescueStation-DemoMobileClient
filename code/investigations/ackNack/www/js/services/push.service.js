@@ -55,7 +55,7 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
 
     service.send = function send( recipient, title,  payload ) {
       var _payload = ({
-        'registration_ids':[ service.registrationId ],
+//        'registration_ids':[ service.registrationId ],
         'to': recipient,
         'title': title,
 //        'message': payload,
