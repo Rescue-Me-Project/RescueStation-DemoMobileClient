@@ -63,8 +63,8 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
         'coldstart': 'true',
         'content-available': '1',
         'data': JSON.stringify( payload ),
-        'priority': 'high' ,
-        'delivery_receipt_requested': 'true'
+        'priority': 'high' 
+        //'delivery_receipt_requested': 'true'
       });
       var encodedPayload = JSON.stringify( _payload );
       //console.log( "sending ", _payload );
