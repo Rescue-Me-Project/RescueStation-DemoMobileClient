@@ -55,17 +55,18 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
       var _payload = ({
         'to': recipient,
         'title': title,
-        'message': payload,
+//        'message': payload,
         'foreground': 'false',
         'coldstart': 'true',
         'content-available': '1',
-        'data': payload,
-        'priority': 'high'
+        'data': JSON.stringify( payload ),
+        'priority': 'high',
+        'delivery_receipt_requested': 'true'
       });
       var encodedPayload = JSON.stringify( _payload );
       console.log( "sending ", _payload );
       var headers = {
-        'Content-Type':'application/json;',
+        'Content-Type':'application/json',
         'Authorization':'key='+window.FCMKEY,
         'Sender':'id='+service.registrationId
       };
