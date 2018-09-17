@@ -31,6 +31,8 @@
     vm.pushConnected = false;
     vm.deviceId = "";
 
+    vm.inbound = { };
+
     pushSrvc.initialisePush( function deviceNowConnected( data ){
       console.log("controller initialised push, got payload ",data );
       // data.deviceId contains the device ID, hopefully, on a registration message
@@ -41,7 +43,6 @@
         console.log("-- setting pushSrvc.callback to ",vm.handleInbound );
       }
     });
-
 
     vm.setRescuer = function setRescuer( newState ) {
       console.log("setting as rescuer", newState );
@@ -94,6 +95,7 @@
 
     vm.handleInbound = function handleInbound( data ) {
       console.log("got inbound message", data);
+      angular.merge( vm.inbound, data );
       vm.inbound = data;
     };
 
