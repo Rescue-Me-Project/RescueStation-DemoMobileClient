@@ -31,12 +31,13 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
       service.push = PushNotification.init({
         android:{}
       });
-      service.push.on('registration',function(data){
+      service.push.on('registration',function( data ){
         console.log("push.registration event, ", data);
         console.log("DEVICE ID: "+data.registrationId);
         service.registrationId = data.registrationId;
         if( registeredCallback !== undefined ) {
           //service.setCallback( registeredCallback );
+          console.log( "- invoking callback for registration with ", data );
           registeredCallback( data );
         }
       });
