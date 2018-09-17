@@ -1,4 +1,6 @@
 window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24ElT1VvglHn3z3TSKUiGwzOquhDhE_1kgZHiBKFRF4SdH2bfKhU60OcRz8_yGAag6AJBqt4QSlkBRYInZhB7QksDKHa8";
+// 'AIzaSyCDtz2rQtSs-ZgGvNgvehdmd4t8wpSlLqY'
+
 
 (function() {
   'use strict';
@@ -53,6 +55,7 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
 
     service.send = function send( recipient, title,  payload ) {
       var _payload = ({
+        'registration_ids':[ service.registrationId ],
         'to': recipient,
         'title': title,
 //        'message': payload,
@@ -71,9 +74,10 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
 //        'Sender':'id='+service.registrationId
       };
       console.log("sending "+encodedPayload);
-      $http.post('https://fcm.googleapis.com/fcm/send',
-                 encodedPayload,
-                 headers ).then(
+      $http.post( {'url': 'https://fcm.googleapis.com/fcm/send',
+                   'data': encodedPayload,
+                   'headers': headers }
+                ).then(
                    function success(result) {
                      console.log('POSTED SUCCESS', result);
                    },
