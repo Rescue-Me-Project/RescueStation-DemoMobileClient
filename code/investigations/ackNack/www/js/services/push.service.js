@@ -70,7 +70,7 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
       //console.log( "sending ", _payload );
       var headers = {
         'Content-Type':'application/json',
-        'Authorization':'key="'+window.FCMKEY+'"' //,
+        'Authorization':'key='+window.FCMKEY+'' //,
       };
       var sendRequest = { method: 'POST',
                           url: 'https://fcm.googleapis.com/fcm/send',
