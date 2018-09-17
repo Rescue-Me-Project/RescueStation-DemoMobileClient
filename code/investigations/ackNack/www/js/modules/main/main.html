@@ -20,6 +20,7 @@
       <button ion-button round ng-class="{'button-positive': vm.isRescuee===true}" ng-click="vm.setRescuee(true);">Rescuee</button>
     </div>
   </div>
+
   <div style="padding:16px;">
     <div ng-show="vm.isRescuer">
       <h3>Rescuer</h3>
@@ -31,6 +32,6 @@
     </div>
   </div>
 
-  <div class="inbound" style="border: 1px solid silver; border: 4px; padding: 11px;" ng-content="{{ vm.inbound }}" >
+  <div class="inbound" style="border: 1px solid silver; border: 4px; padding: 11px;" ng-content="{{JSON.stringify(vm.inbound)}}" >
   </div>
 </ion-view>
