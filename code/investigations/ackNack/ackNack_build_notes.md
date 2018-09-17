@@ -44,3 +44,20 @@ https://github.com/monospaced/angular-qrcode
 
 `npm install angular-qrcode`
 
+------------
+
+~~## Message sending and authorisation~~
+
+~~Unless I'm doing something wrong which I can't identify, Google Firebase rejects messages sent from devices using the key (and also states it's worst practice).~~
+
+~~Instead, you need to generate a [private key for the service account](https://firebase.google.com/docs/cloud-messaging/auth-server).~~
+
+~~1. Go to 'Service Accounts' under the application settings in the Firebase console~~
+~~2. Click 'generate new private key' button towards the bottom of the page~~
+~~3.~~
+
+- when using the hacky send:
+	- Do not use `from` as a property in the `data` object, as it's a reserved word
+	- Do not wrap the `key=GOOGLE_PROVIDED_KEY` in the `Authorization` header
+	- Make sure the `data` object is sent as an object to `$http` as it will manage serialisation itself (and confuse the Google servers if passed in as a string)
+	- 
