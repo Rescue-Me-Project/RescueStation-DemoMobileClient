@@ -31,7 +31,8 @@
     vm.pushConnected = false;
     vm.deviceId = "";
 
-    pushSrvc.initialisePush( function deviceNowConnected(data){
+    pushSrvc.initialisePush( function deviceNowConnected( data ){
+      console.log("controller initialised push, got payload ",data );
       // data.deviceId contains the device ID, hopefully, on a registration message
       if (data.hasOwnProperty('registrationId')===true) {
         vm.deviceId = data.registrationId;
