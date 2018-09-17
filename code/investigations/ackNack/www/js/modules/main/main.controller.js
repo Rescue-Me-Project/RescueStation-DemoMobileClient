@@ -76,7 +76,7 @@
             return;
           } else {
             if(result.format==="QR_CODE") {
-              pushSrvc.send( result.text, "contact_from_rescuer", {from:vm.deviceId} );
+              pushSrvc.send( result.text, "contact_from_rescuer", {rescuer:vm.deviceId} );
             }
           }
         },
