@@ -79,9 +79,9 @@
             return;
           } else {
             if(result.format==="QR_CODE") {
-              pushSrvc.send( result.text, "contact_from_rescuer",
+              pushSrvc.send( result.text, "contact_from_rescuee",
                              {rescuer_device_id:vm.deviceId,
-                              event:"intro_from_rescuer"} );
+                              event:"rescuee_start" } );
             }
           }
         },
@@ -101,14 +101,16 @@
       angular.merge( vm.inbound.data, data );
       vm.inbound.rendered = JSON.stringify(vm.inbound.data);
 
-      if(data.data.event === "intro_from_rescuer") {
-        // compose an ack message back
-        pushSrvc.send( data.data.rescuer_device_id, "acknowledgement_from_rescuee",
-                       { rescuee_device_id:vm.deviceId,
-                         event:"ack_from_rescuee" } );
-      }
-      if(data.data.event === "ack_from_rescuee") {
-        alert("ack back");
+      if(data.hasOwnProperty("additionalData")) {
+        if(data.additionalData.event === "rescuee_start") {
+          // compose an ack message back
+          pushSrvc.send( data.data.rescuer_device_id, "acknowledgement_from_rescuee",
+                         { rescuee_device_id:vm.deviceId,
+                           event:"ack_from_rescuer" } );
+        }
+        if(data.additionalData.event === "ack_from_rescuer") {
+          alert("ack back");
+        }
       }
     };
 
