@@ -54,7 +54,7 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
     };
 
     service.send = function send( recipient, title,  payload ) {
-      var _payload = {
+      var fullPayload = {
 //        'registration_ids':[ service.registrationId ],
         'to': recipient,
         'notification': {
@@ -77,7 +77,7 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
       };
       var sendRequest = { method: 'POST',
                           url: 'https://fcm.googleapis.com/fcm/send',
-                          data: _payload,
+                          data: fullPayload,
                           headers: headers };
       console.log("sendRequest: ", sendRequest);
       $http( sendRequest ).then(
