@@ -31,7 +31,8 @@
     vm.pushConnected = false;
     vm.deviceId = "";
 
-    vm.inbound = { };
+    vm.inbound = { data: { },
+                   rendered: "<i>No messages yet.</i>" };
 
     pushSrvc.initialisePush( function deviceNowConnected( data ){
       console.log("controller initialised push, got payload ",data );
@@ -95,8 +96,8 @@
 
     vm.handleInbound = function handleInbound( data ) {
       console.log("got inbound message", data);
-      angular.merge( vm.inbound, data );
-      vm.inbound = data;
+      angular.merge( vm.inbound.data, data );
+      vm.inbound.rendered = JSON.stringify(vm.inbound.data);
     };
 
   }
