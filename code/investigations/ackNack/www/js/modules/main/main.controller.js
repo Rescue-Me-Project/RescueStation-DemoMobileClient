@@ -34,16 +34,18 @@
     vm.inbound = { data: { },
                    rendered: "No messages yet." };
 
-    pushSrvc.initialisePush( function deviceNowConnected( data ){
-      console.log("controller initialised push, got payload ",data );
-      // data.deviceId contains the device ID, hopefully, on a registration message
-      if (data.hasOwnProperty('registrationId')===true) {
-        vm.deviceId = data.registrationId;
-        vm.pushConnected = true;
-        pushSrvc.setCallback( vm.handleInbound );
-        console.log("-- setting pushSrvc.callback to ",vm.handleInbound );
-      }
-    });
+    vm.initialise = function initialise() {
+      pushSrvc.initialisePush( function deviceNowConnected( data ){
+        console.log("controller initialised push, got payload ",data );
+        // data.deviceId contains the device ID, hopefully, on a registration message
+        if (data.hasOwnProperty('registrationId')===true) {
+          vm.deviceId = data.registrationId;
+          vm.pushConnected = true;
+          pushSrvc.setCallback( vm.handleInbound );
+          console.log("-- setting pushSrvc.callback to ",vm.handleInbound );
+        }
+      });
+    };
 
     vm.setRescuer = function setRescuer( newState ) {
       console.log("setting as rescuer", newState );
@@ -113,6 +115,8 @@
         }
       }
     };
+
+    vm.initialise();
 
   }
 })();

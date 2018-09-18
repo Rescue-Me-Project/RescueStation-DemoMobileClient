@@ -1,4 +1,3 @@
-console.log("main.module.js invoked");
 (function() {
   'use strict';
 
@@ -11,10 +10,8 @@ console.log("main.module.js invoked");
       $stateProvider
         .state('main', {
           url: '/main',
-          xyztemplate: '<h1>HELLO</h1>',
           templateUrl: 'js/modules/main/main.html',
           controller: 'mainCtrl as vm'
         });
     });
-  console.log("and configured.");
 })();
