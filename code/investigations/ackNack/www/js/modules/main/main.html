@@ -15,12 +15,18 @@
   <div id="not-connected" ng-show="!vm.pushConnected">Connecting...
     <button ion-button round ng-click="vm.initialise();">retry<button>
   </div>
+
   <div id="connected" ng-show="vm.pushConnected">
     <p>Connected.</p>
     <div id="role-buttons">
       <button ion-button round ng-class="{'button-positive': vm.isRescuer===true}" ng-click="vm.setRescuer(true);">Rescuer</button>
       <button ion-button round ng-class="{'button-positive': vm.isRescuee===true}" ng-click="vm.setRescuee(true);">Rescuee</button>
     </div>
+
+    <div class="inbound" style="border: 1px solid silver; border: 4px; padding: 11px;" >
+      {{vm.inbound.rendered}}
+    </div>
+
   </div>
 
   <div style="padding:16px;">
@@ -32,10 +38,6 @@
       <h3>Rescuee</h3>
       <button ion-button round ng-click="vm.rescueeStartCodeScan()">Scan a Rescuer's QR Code</button>
     </div>
-  </div>
-
-  <div class="inbound" style="border: 1px solid silver; border: 4px; padding: 11px;" >
-    {{vm.inbound.rendered}}
   </div>
 
 </ion-view>
