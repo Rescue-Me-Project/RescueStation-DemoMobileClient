@@ -105,7 +105,7 @@
         // compose an ack message back
         pushSrvc.send( data.data.rescuer_device_id, "acknowledgement_from_rescuee",
                        { rescuee_device_id:vm.deviceId,
-                         event:"ack_from_rescuee" ) );
+                         event:"ack_from_rescuee" } );
       }
       if(data.data.event === "ack_from_rescuee") {
         alert("ack back");
