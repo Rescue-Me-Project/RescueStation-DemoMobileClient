@@ -106,7 +106,7 @@
       if(data.hasOwnProperty("additionalData")) {
         if(data.additionalData.event === "rescuee_start") {
           // compose an ack message back
-          pushSrvc.send( data.data.rescuer_device_id, "acknowledgement_from_rescuee",
+          pushSrvc.send( data.addaitionalData.rescuer_device_id, "acknowledgement_from_rescuer",
                          { rescuee_device_id:vm.deviceId,
                            event:"ack_from_rescuer" } );
         }
