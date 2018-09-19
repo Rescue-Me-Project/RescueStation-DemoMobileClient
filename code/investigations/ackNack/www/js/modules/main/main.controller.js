@@ -115,8 +115,10 @@
           console.log("got sharedUuid of "+data.additionalData.sharedUuid);
           window.localStorage.setItem("uuid", data.additionalData.sharedUuid);
           // compose an ack message back
-          pushSrvc.send( data.additionalData.rescuer_device_id, "acknowledgement_from_rescuer",
+          pushSrvc.send( data.additionalData.rescuer_device_id,
+                         "acknowledgement_from_rescuer",
                          { rescuee_device_id:vm.deviceId,
+                           "sharedUuid":data.additionalData.sharedUuid,
                            event:"ack_from_rescuer" } );
         }
         if(data.additionalData.event === "ack_from_rescuer") {
