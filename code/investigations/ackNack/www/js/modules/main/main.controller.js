@@ -10,7 +10,8 @@
     '$scope',
     '$state',
     '$sce',
-    'pushSrvc'
+    'pushSrvc',
+    'uuid'
   ];
 
   function mainCtrl(
@@ -18,7 +19,8 @@
     $scope,
     $state,
     $sce,
-    pushSrvc
+    pushSrvc,
+    uuid
   ) {
 
     var vm=angular.extend(this, {
@@ -81,8 +83,12 @@
             return;
           } else {
             if(result.format==="QR_CODE") {
+              var sharedUuid = uuid.v4();
+              window.localStorage.setItem("uuid", sharedUuid);
+              console.log("sending UUID of "+sharedUuid);
               pushSrvc.send( result.text, "contact_from_rescuee",
                              {rescuer_device_id:vm.deviceId,
+                              "sharedUuid":sharedUuid,
                               event:"rescuee_start" } );
             }
           }
@@ -105,13 +111,25 @@
 
       if(data.hasOwnProperty("additionalData")) {
         if(data.additionalData.event === "rescuee_start") {
+          // log our UUID
+          console.log("got sharedUuid of "+data.additionalData.sharedUuid);
+          window.localStorage.setItem("uuid", data.additionalData.sharedUuid);
           // compose an ack message back
           pushSrvc.send( data.additionalData.rescuer_device_id, "acknowledgement_from_rescuer",
                          { rescuee_device_id:vm.deviceId,
                            event:"ack_from_rescuer" } );
         }
         if(data.additionalData.event === "ack_from_rescuer") {
-          alert("ack back");
+          // do our UUIDs match?
+          if( window.localStorage.getItem("uuid")===data.additionalData.sharedUuid ) {
+            alert("UUIDs match, good to go");
+          } else {
+            alert("Error: Mismatched UUIDs!");
+            console.log("stored UUID",window.localStorage.getItem("uuid"));
+            console.log("roundtripped UUID",data.additionalData.sharedUuid);
+          }
+          // pof
+          //alert("ack back");
         }
       }
     };

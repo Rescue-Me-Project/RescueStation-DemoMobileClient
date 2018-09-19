@@ -3,7 +3,7 @@
 
   angular
     .module('main', [
-      //      'ionic'
+      'angular-uuid',
       'push'
     ])
     .config(function($stateProvider){

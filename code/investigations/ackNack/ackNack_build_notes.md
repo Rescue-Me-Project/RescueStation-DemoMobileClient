@@ -58,6 +58,18 @@ https://github.com/monospaced/angular-qrcode
 
 - when using the hacky send:
 	- Do not use `from` as a property in the `data` object, as it's a reserved word
-	- Do not wrap the `key=GOOGLE_PROVIDED_KEY` in the `Authorization` header
+	- Do not wrap the `key=GOOGLE_PROVIDED_KEY` in the `Authorization` header with quotes! the GOOGLE_PROVIDED_KEY must be as-is - eg, `key=ASD123:123123etc`
 	- Make sure the `data` object is sent as an object to `$http` as it will manage serialisation itself (and confuse the Google servers if passed in as a string)
-	- 
+
+-----
+
+## UUID exchange
+
+When two devices are paired, they must exchange a key by which they can uniquely communicate with and identify each other. The Rescuer device will generate a UUID and send it to the Rescuee, and both devices will make a record of this. On recording it, both devices will then subscribe to this inbox for notifications, differentiating on their roles by watching a UUID/er or UUID/ee inbox.
+
+### UUID generation
+
+[angular-uuid](https://github.com/munkychop/angular-uuid) is a wrapper for the DigitalLabs' preferred UUID generator.
+
+`npm install --save angular-uuid`
+
