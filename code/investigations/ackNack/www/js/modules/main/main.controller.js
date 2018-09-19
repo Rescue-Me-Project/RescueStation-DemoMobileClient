@@ -33,8 +33,27 @@
     vm.pushConnected = false;
     vm.deviceId = "";
 
+    vm.uuid = false;
+
     vm.inbound = { data: { },
                    rendered: "No messages yet." };
+
+    // restore any state in the interface
+    if(window.localstorage.getItem("uuid")) {
+      vm.uuid = window.localstorage.getItem("uuid");
+      if(window.localstorage.getItem("role")) {
+        vm.isRescuer = false;
+        vm.isRescuee = false;
+        if(window.localstorage.getItem("role")==="rescuer") {
+          vm.isRescuer = true;
+          vm.isRescuee = false;
+        }
+        if(window.localstorage.getItem("role")==="rescuee") {
+          vm.isRescuer = false;
+          vm.isRescuee = true; 
+        }
+      }
+    }
 
     vm.initialise = function initialise() {
       pushSrvc.initialisePush( function deviceNowConnected( data ){
@@ -111,9 +130,11 @@
 
       if(data.hasOwnProperty("additionalData")) {
         if(data.additionalData.event === "rescuee_start") {
+          window.localstorage.setItem("role","rescuer");
           // log our UUID
           console.log("got sharedUuid of "+data.additionalData.sharedUuid);
           window.localStorage.setItem("uuid", data.additionalData.sharedUuid);
+          vm.uuid = data.additionalData.sharedUuid;
           // compose an ack message back
           pushSrvc.send( data.additionalData.rescuer_device_id,
                          "acknowledgement_from_rescuer",
@@ -125,10 +146,12 @@
           // do our UUIDs match?
           if( window.localStorage.getItem("uuid")===data.additionalData.sharedUuid ) {
             alert("UUIDs match, good to go");
+            window.localstorage.setItem("role","rescuer");
           } else {
             alert("Error: Mismatched UUIDs!");
             console.log("stored UUID",window.localStorage.getItem("uuid"));
             console.log("roundtripped UUID",data.additionalData.sharedUuid);
+            vm.uuid = data.additionalData.sharedUuid;
           }
           // pof
           //alert("ack back");

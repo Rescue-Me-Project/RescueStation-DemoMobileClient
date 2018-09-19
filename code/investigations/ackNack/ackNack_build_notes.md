@@ -73,3 +73,8 @@ When two devices are paired, they must exchange a key by which they can uniquely
 
 `npm install --save angular-uuid`
 
+### Channels, topics and subscription
+
+We need to create a channel and subscribe to it. The [push API is documented here](https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md). A seemingly naïf implementation ( [via](https://firebase.google.com/docs/cloud-messaging/android/topic-messaging) ) is to specify a 'topic' as key when posting a message, which is distributed to all subscribed clients.
+
+
