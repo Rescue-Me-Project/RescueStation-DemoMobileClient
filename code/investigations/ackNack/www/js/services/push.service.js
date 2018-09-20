@@ -96,18 +96,18 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
     // subscription handling
 
     service.subscribe = function subscribe( topic ) {
-      pushSrvc.startSubscription( topic, function subscribeSuccess(){
+      service.startSubscription( topic, function subscribeSuccess(){
         console.log("push.service - subscription to '"+topic+"' successful!");
 
-        pushSrvc.on('registration', function (data) {
+        service.on('registration', function (data) {
           alert('registrationId:' + data.registrationId);
         });
 
-        pushSrvc.on('notification', function (data) {
+        service.on('notification', function (data) {
           alert('push:' + JSON.stringify(data));
         });
 
-        pushSrvc.on('error', function (e) {
+        service.on('error', function (e) {
           alert('error: ' + e.message);
         });
 
