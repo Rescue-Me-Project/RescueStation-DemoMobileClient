@@ -125,16 +125,16 @@
           window.localStorage.setItem("uuid", data.additionalData.sharedUuid);
           vm.uuid = data.additionalData.sharedUuid;
 
-          vm.startSubscription("rescuee");
-
           // compose an ack message back
           pushSrvc.send( data.additionalData.rescuer_device_id,
                          "acknowledgement_from_rescuer",
                          { rescuee_device_id:vm.deviceId,
                            "sharedUuid":data.additionalData.sharedUuid,
                            event:"ack_from_rescuer" } );
+
+          vm.startSubscription("rescuee");
         }
-        if(data.additionalData.event === "acknowledgement_from_rescuer") {
+        if(data.additionalData.event === "ack_from_rescuer") {
           // do our UUIDs match?
           if( window.localStorage.getItem("uuid")===data.additionalData.sharedUuid ) {
             alert("UUIDs match, good to go");
