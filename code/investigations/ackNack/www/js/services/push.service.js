@@ -96,18 +96,18 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
     // subscription handling
 
     service.subscribe = function subscribe( topic ) {
-      push.startSubscription( topic, function subscribeSuccess(){
+      pushSrvc.startSubscription( topic, function subscribeSuccess(){
         console.log("push.service - subscription to '"+topic+"' successful!");
 
-        push.on('registration', function (data) {
+        pushSrvc.on('registration', function (data) {
           alert('registrationId:' + data.registrationId);
         });
 
-        push.on('notification', function (data) {
+        pushSrvc.on('notification', function (data) {
           alert('push:' + JSON.stringify(data));
         });
 
-        push.on('error', function (e) {
+        pushSrvc.on('error', function (e) {
           alert('error: ' + e.message);
         });
 
@@ -130,7 +130,7 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
         //'foreground': 'false',
         //'coldstart': 'true',
         //'content-available': '1',
-        //'data': payload,
+        'data': payload,
         'priority': 'high' 
       };
       var headers = {
