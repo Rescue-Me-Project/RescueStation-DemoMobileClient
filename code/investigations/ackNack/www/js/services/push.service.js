@@ -96,7 +96,7 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
     // subscription handling
 
     service.subscribe = function subscribe( topic ) {
-      service.push.startSubscription( topic, function subscribeSuccess(){
+      service.push.subscribe( topic, function subscribeSuccess(){
         console.log("push.service - subscription to '"+topic+"' successful!");
 
         service.push.on('registration', function (data) {
