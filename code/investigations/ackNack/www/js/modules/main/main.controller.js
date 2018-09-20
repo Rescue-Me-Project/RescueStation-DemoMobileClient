@@ -134,7 +134,7 @@
                            "sharedUuid":data.additionalData.sharedUuid,
                            event:"ack_from_rescuer" } );
         }
-        if(data.additionalData.event === "ack_from_rescuer") {
+        if(data.additionalData.event === "acknowledgement_from_rescuer") {
           // do our UUIDs match?
           if( window.localStorage.getItem("uuid")===data.additionalData.sharedUuid ) {
             alert("UUIDs match, good to go");
@@ -164,7 +164,7 @@
     vm.pingRescuer = function pingRescuer() {
       pushSrvc.sendToTopic( vm.uuid + "/" + "rescuer", "from the rescuee", {"message":"hello from rescuee" } );
     };
-    vm.pingRescuee = function pingRescuer() {
+    vm.pingRescuee = function pingRescuee() {
       pushSrvc.sendToTopic( vm.uuid + "/" + "rescuee", "from the rescuer", {"message":"hello from rescuer" } );
     };
     vm.initialise();
