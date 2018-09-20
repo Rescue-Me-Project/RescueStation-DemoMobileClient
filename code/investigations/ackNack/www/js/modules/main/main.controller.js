@@ -119,7 +119,7 @@
 
       if(data.hasOwnProperty("additionalData")) {
         if(data.additionalData.event === "rescuee_start") {
-          window.localstorage.setItem("role","rescuer");
+          window.localStorage.setItem("role","rescuer");
           // log our UUID
           console.log("got sharedUuid of "+data.additionalData.sharedUuid);
           window.localStorage.setItem("uuid", data.additionalData.sharedUuid);
@@ -138,7 +138,7 @@
           // do our UUIDs match?
           if( window.localStorage.getItem("uuid")===data.additionalData.sharedUuid ) {
             alert("UUIDs match, good to go");
-            window.localstorage.setItem("role","rescuer");
+            window.localStorage.setItem("role","rescuer");
 
             vm.startSubscription("rescuer");
 
