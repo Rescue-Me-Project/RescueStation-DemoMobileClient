@@ -132,15 +132,15 @@
                            "sharedUuid":data.additionalData.sharedUuid,
                            event:"ack_from_rescuer" } );
 
-          vm.startSubscription("rescuee");
+          vm.startSubscription("rescuer");
         }
         if(data.additionalData.event === "ack_from_rescuer") {
           // do our UUIDs match?
           if( window.localStorage.getItem("uuid")===data.additionalData.sharedUuid ) {
             alert("UUIDs match, good to go");
-            window.localStorage.setItem("role","rescuer");
+            window.localStorage.setItem("role","rescuee");
 
-            vm.startSubscription("rescuer");
+            vm.startSubscription("rescuee");
 
           } else {
             alert("Error: Mismatched UUIDs!");
@@ -154,7 +154,7 @@
     };
 
     vm.startSubscription = function startSubscription( role ) {
-      alert("NO I AM NOT SUBSCRIVING");
+      alert("NO I AM NOT SUBSCRIBING");
       // subscribe to "vm.uuid/role"
       var topic = vm.uuid + "/" + role;
       console.log( "subscribing to " + topic );
