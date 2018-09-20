@@ -42,15 +42,15 @@
 
     // restore any state in the interface
     if(window.localstorage.getItem("uuid")) {
-      vm.uuid = window.localstorage.getItem("uuid");
-      if(window.localstorage.getItem("role")) {
+      vm.uuid = window.localStorage.getItem("uuid");
+      if(window.localStorage.getItem("role")) {
         vm.isRescuer = false;
         vm.isRescuee = false;
-        if(window.localstorage.getItem("role")==="rescuer") {
+        if(window.localStorage.getItem("role")==="rescuer") {
           vm.isRescuer = true;
           vm.isRescuee = false;
         }
-        if(window.localstorage.getItem("role")==="rescuee") {
+        if(window.localStorage.getItem("role")==="rescuee") {
           vm.isRescuer = false;
           vm.isRescuee = true; 
         }
