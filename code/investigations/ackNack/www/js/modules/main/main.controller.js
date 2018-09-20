@@ -154,6 +154,7 @@
     };
 
     vm.startSubscription = function startSubscription( role ) {
+      alert("NO I AM NOT SUBSCRIVING");
       // subscribe to "vm.uuid/role"
       var topic = vm.uuid + "/" + role;
       console.log( "subscribing to " + topic );
