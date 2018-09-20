@@ -108,3 +108,11 @@ A [note from the Firebase documentation](https://firebase.google.com/docs/cloud-
 > Messages with both notification and data payload, both background and foreground. In this case, the notification is delivered to the device’s system tray, and the data payload is delivered in the extras of the intent of your launcher Activity.
 
 Referring to the [phonegap-plugin-push API documentation](https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md#pushnotificationcreatechannel)
+
+## Authentication
+
+On the Firebase project page, look at Develop→Authentication→Sign-in method (tab). Maybe enable 'Anonymous'?
+
+Under Develop→Authentication→Templates, a "Subject" has a project number (here, it is `project-930939697602`) - maybe this is the alternative endpoint for topic HTTP posts? 
+
+
