@@ -138,7 +138,8 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
         'Authorization':'key='+window.FCMKEY+'' //,
       };
       var sendRequest = { method: 'POST',
-                          url: 'https://fcm.googleapis.com/v1/projects/project-930939697602/messages:send',
+                          //url: 'https://fcm.googleapis.com/v1/projects/project-930939697602/messages:send',
+                          url: 'https://fcm.googleapis.com/fcm/send',
                           data: fullPayload,
                           headers: headers };
       console.log("Topic sendRequest: ", sendRequest);
