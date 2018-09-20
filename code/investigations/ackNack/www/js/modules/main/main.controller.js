@@ -41,7 +41,7 @@
     vm.subscriptionFeedback = "";
 
     // restore any state in the interface
-    if(window.localstorage.getItem("uuid")) {
+    if(window.localStorage.getItem("uuid")) {
       vm.uuid = window.localStorage.getItem("uuid");
       if(window.localStorage.getItem("role")) {
         vm.isRescuer = false;
