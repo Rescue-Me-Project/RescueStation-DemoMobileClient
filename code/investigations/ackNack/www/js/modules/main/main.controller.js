@@ -38,6 +38,8 @@
     vm.inbound = { data: { },
                    rendered: "No messages yet." };
 
+    vm.subscriptionFeedback = "";
+
     // restore any state in the interface
     if(window.localstorage.getItem("uuid")) {
       vm.uuid = window.localstorage.getItem("uuid");
@@ -72,19 +74,6 @@
       console.log("setting as rescuer", newState );
       vm.isRescuer = newState;
       vm.isRescuee = !newState;
-/*
-      cordova.plugins.barcodeScanner.encode(
-        cordova.plugins.barcodeScanner.Encode.TEXT_TYPE,
-        vm.deviceId,
-        function success( data ) {
-          // barcode is in data.file (type is data.format)
-          vm.barcode =  data.file;
-        },
-        function fail(fail) {
-          console.log(fail);
-        }
-      );
-*/
     };
 
     vm.setRescuee = function setRescuee( newState ) {
@@ -135,6 +124,9 @@
           console.log("got sharedUuid of "+data.additionalData.sharedUuid);
           window.localStorage.setItem("uuid", data.additionalData.sharedUuid);
           vm.uuid = data.additionalData.sharedUuid;
+
+          vm.startSubscription("rescuee");
+
           // compose an ack message back
           pushSrvc.send( data.additionalData.rescuer_device_id,
                          "acknowledgement_from_rescuer",
@@ -147,11 +139,13 @@
           if( window.localStorage.getItem("uuid")===data.additionalData.sharedUuid ) {
             alert("UUIDs match, good to go");
             window.localstorage.setItem("role","rescuer");
+
+            vm.startSubscription("rescuer");
+
           } else {
             alert("Error: Mismatched UUIDs!");
             console.log("stored UUID",window.localStorage.getItem("uuid"));
             console.log("roundtripped UUID",data.additionalData.sharedUuid);
-            vm.uuid = data.additionalData.sharedUuid;
           }
           // pof
           //alert("ack back");
@@ -159,6 +153,20 @@
       }
     };
 
+    vm.startSubscription = function startSubscription( role ) {
+      // subscribe to "vm.uuid/role"
+      var topic = vm.uuid + "/" + role;
+      console.log( "subscribing to " + topic );
+      pushSrvc.subscribe( topic, function() {
+
+      } );
+    };
+    vm.pingRescuer = function pingRescuer() {
+      pushSrvc.sendToTopic( vm.uuid + "/" + "rescuer", "from the rescuee", {} );
+    };
+    vm.pingRescuee = function pingRescuer() {
+      pushSrvc.sendToTopic( vm.uuid + "/" + "rescuee", "from the rescuer", {} );
+    };
     vm.initialise();
 
   }

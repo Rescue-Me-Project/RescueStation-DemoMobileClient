@@ -42,7 +42,11 @@
   </div>
 
   <div ng-show="vm.uuid!=false">
-UUID:{{vm.uuid}}
+    UUID:{{vm.uuid}}
+
+    <button ion-button round ng-click="vm.pingRescuee();" ng-show="vm.isRescuer===true">Ping Rescuee</button>
+    <button ion-button round ng-click="vm.pingRescuer();" ng-show="vm.isRescuee===true">Ping Rescuer</button>
+    <div>{{vm.subscriptionFeedback}}</div>
   </div>
 
 </ion-view>

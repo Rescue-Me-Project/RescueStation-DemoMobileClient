@@ -29,6 +29,8 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
     service.registrationId = undefined;
     service.callbackHandler = undefined;
 
+    service.subscribeCallbackHandler = undefined;
+
     service.initialisePush = function initialisePush( registeredCallback ) {
       service.push = PushNotification.init({
         android:{}
@@ -55,7 +57,6 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
 
     service.send = function send( recipient, title,  payload ) {
       var fullPayload = {
-//        'registration_ids':[ service.registrationId ],
         'to': recipient,
         'notification': {
           'title': title,
@@ -63,13 +64,11 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
           'sound': 'default',
           'badge': '0'
         },
-//        'message': payload,
         'foreground': 'false',
         'coldstart': 'true',
         'content-available': '1',
-        'data': /*JSON.stringify(*/ payload /*)*/,
+        'data': payload,
         'priority': 'high' 
-        //'delivery_receipt_requested': 'true'
       };
       var headers = {
         'Content-Type':'application/json',
@@ -92,6 +91,65 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
 
     service.setCallback = function setCallback( handler ) {
       service.callbackHandler = handler;
+    };
+
+    // subscription handling
+
+    service.subscribe = function subscribe( topic ) {
+      startSubscription( topic, function subscribeSuccess(){
+        console.log("push.service - subscription to '"+topic+"' successful!");
+
+        push.on('registration', function (data) {
+          alert('registrationId:' + data.registrationId);
+        });
+
+        push.on('notification', function (data) {
+          alert('push:' + JSON.stringify(data));
+        });
+
+        push.on('error', function (e) {
+          alert('error: ' + e.message);
+        });
+
+      }, function subscribeFailure( err ){
+        console.log("push.service - subscription to '"+topic+"' failed, error:", err);
+        throw( err );
+      });
+    };
+
+    service.sendToTopic = function sendToTopic( topic, title,  payload ) {
+      var fullPayload = {
+        //'to': recipient,
+        topic: topic,
+        'notification': {
+          'title': title,
+          'text': 'this is the text property',
+          'sound': 'default',
+          'badge': '0'
+        },
+        //'foreground': 'false',
+        //'coldstart': 'true',
+        //'content-available': '1',
+        //'data': payload,
+        'priority': 'high' 
+      };
+      var headers = {
+        'Content-Type':'application/json',
+        'Authorization':'key='+window.FCMKEY+'' //,
+      };
+      var sendRequest = { method: 'POST',
+                          url: 'https://fcm.googleapis.com/fcm/send',
+                          data: fullPayload,
+                          headers: headers };
+      console.log("Topic sendRequest: ", sendRequest);
+      $http( sendRequest ).then(
+        function success(result) {
+          console.log('TOPIC POSTED SUCCESS', result);
+        },
+        function fail( error ) {
+          console.log("TOPIC POSTED WITH PROVISIOS", error);
+        }
+      );
     };
 
     return service;

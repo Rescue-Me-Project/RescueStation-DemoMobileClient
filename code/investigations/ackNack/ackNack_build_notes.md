@@ -77,4 +77,34 @@ When two devices are paired, they must exchange a key by which they can uniquely
 
 We need to create a channel and subscribe to it. The [push API is documented here](https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md). A seemingly naïf implementation ( [via](https://firebase.google.com/docs/cloud-messaging/android/topic-messaging) ) is to specify a 'topic' as key when posting a message, which is distributed to all subscribed clients.
 
+In terms of methods on the Angular/Cordova side, we have:
 
+`push.subscribe(topic, successHandler, errorHandler)`
+`push.unsubscribe(topic, successHandler, errorHandler)`
+
+and to send (via CURL):
+
+```
+curl -X POST -H "Authorization: Bearer ya29.ElqKBGN2Ri_Uz...HnS_uNreA" -H "Content-Type: application/json" -d '{
+  "message": {
+    "topic" : "foo-bar",
+    "notification": {
+      "body": "This is a Firebase Cloud Messaging Topic Message!",
+      "title": "FCM Message"
+    }
+  }
+}' https://fcm.googleapis.com/v1/projects/myproject-b5ae1/messages:send HTTP/1.1
+```
+
+A [note from the Firebase documentation](https://firebase.google.com/docs/cloud-messaging/android/topic-messaging): (*Receive and handle topic messages*)
+
+> FCM delivers topic messages in the same way as other downstream messages.
+
+> To receive messages, use a service that extends FirebaseMessagingService. Your service should override the onMessageReceived and onDeletedMessages callbacks. It should handle any message within 20 seconds of receipt (10 seconds on Android Marshmallow). The time window may be shorter depending on OS delays incurred ahead of calling onMessageReceived. After that time, various OS behaviors such as Android O's background execution limits may interfere with your ability to complete your work. For more information see our overview on message priority.
+
+> onMessageReceived is provided for most message types, with the following exceptions:
+
+> Notification messages delivered when your app is in the background. In this case, the notification is delivered to the device’s system tray. A user tap on a notification opens the app launcher by default.
+> Messages with both notification and data payload, both background and foreground. In this case, the notification is delivered to the device’s system tray, and the data payload is delivered in the extras of the intent of your launcher Activity.
+
+Referring to the [phonegap-plugin-push API documentation](https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md#pushnotificationcreatechannel)
