@@ -187,7 +187,7 @@
       } );
     };
     vm.pingRescuer = function pingRescuer() {
-      pushSrvc.sendToTopic( vm.uuid + "/" + "rescuer", "from the rescuee", {"message":"hello from rescuee" } );
+      pushSrvc.sendToTopic( vm.uuid + "_" + "rescuer", "from the rescuee", {"message":"hello from rescuee" } );
     };
     vm.pingRescuee = function pingRescuee() {
       pushSrvc.sendToTopic( vm.uuid + "/" + "rescuee", "from the rescuer", {"message":"hello from rescuer" } );
