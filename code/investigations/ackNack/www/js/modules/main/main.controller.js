@@ -94,6 +94,16 @@
       });
     };
 
+    // only of use for broken subscriptions in past - not hooked in yet
+    vm.restoreSubscriptionMaybe = function restoreSubscriptionMaybe(){
+      if(window.localStorage.get("uuid") && window.localStorage.get("role")) {
+        vm.uuid=window.localStorage.get("uuid");
+        vm.role=window.localStorage.get("role");
+        vm.inbound.rendered = "Resuming role as "+vm.role;
+        vm.startSubscription( vm.role );
+      }
+    };
+
     vm.setRescuer = function setRescuer( newState ) {
       console.log("setting as rescuer", newState );
       vm.isRescuer = newState;
@@ -163,6 +173,7 @@
           // do our UUIDs match?
           if( window.localStorage.getItem("uuid")===data.additionalData.sharedUuid ) {
             alert("UUIDs match, good to go");
+            vm.uuid = window.localStorage.getItem("uuid");
             window.localStorage.setItem("role","rescuee");
 
             vm.startSubscription("rescuee");
