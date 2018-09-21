@@ -78,10 +78,14 @@
     }
 
     vm.initialise = function initialise() {
+
+      vm.inbound.rendered = "No registrationId yet...";
       pushSrvc.initialisePush( function deviceNowConnected( data ){
         console.log("controller initialised push, got payload ",data );
+        vm.inbound.rendered = "Got connected payload";
         // data.deviceId contains the device ID, hopefully, on a registration message
         if (data.hasOwnProperty('registrationId')===true) {
+          vm.inbound.rendered = "Got connection registrationId of "+data.registrationId;
           vm.deviceId = data.registrationId;
           vm.pushConnected = true;
           pushSrvc.setCallback( vm.handleInbound );
