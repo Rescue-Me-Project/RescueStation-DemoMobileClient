@@ -50,7 +50,7 @@
         vm.pushConnected = false;
         vm.uuid = false;
         vm.deviceId = "";
-        vm.pushSrvc.setCallback( function (){} );
+        pushSrvc.setCallback( vm.dummyCallbackHandler );
         vm.subscriptionFeedback = "Reset completed.";
 
         vm.initialise();
