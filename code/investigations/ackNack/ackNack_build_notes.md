@@ -115,4 +115,10 @@ On the Firebase project page, look at Develop→Authentication→Sign-in method 
 
 Under Develop→Authentication→Templates, a "Subject" has a project number (here, it is `project-930939697602`) - maybe this is the alternative endpoint for topic HTTP posts? 
 
+### 400 error and bomb out on topic subscriptions
+
+Subsacribing to topics with / in their path caused a 400 and unhandled core dump - switched out to an underscore, which is apparently a valid character.
+
+
+
 

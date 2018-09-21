@@ -49,6 +49,7 @@
         vm.isRescuee = false;
         vm.pushConnected = false;
         vm.deviceId = "";
+        vm.pushSrvc.setCallback( function (){} );
         vm.subscriptionFeedback = "Reset completed.";
 
         vm.initialise();
