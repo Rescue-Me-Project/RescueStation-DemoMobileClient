@@ -93,6 +93,7 @@
     };
 
     vm.setRescuee = function setRescuee( newState ) {
+      console.log("setting as rescue*e*", newState );
       vm.isRescuer = !newState;
       vm.isRescuee = newState;
     };
