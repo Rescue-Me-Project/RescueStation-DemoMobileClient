@@ -190,7 +190,7 @@
       pushSrvc.sendToTopic( vm.uuid + "_" + "rescuer", "from the rescuee", {"message":"hello from rescuee" } );
     };
     vm.pingRescuee = function pingRescuee() {
-      pushSrvc.sendToTopic( vm.uuid + "/" + "rescuee", "from the rescuer", {"message":"hello from rescuer" } );
+      pushSrvc.sendToTopic( vm.uuid + "_" + "rescuee", "from the rescuer", {"message":"hello from rescuer" } );
     };
     vm.initialise();
 
