@@ -55,6 +55,9 @@
         vm.initialise();
       }
     };
+    vm.dummyCallbackHandler = function dummyCallbackHandler(i) {
+      console.log(" *** dummyCallbackHandler - inbound rejected containing ",i);
+    };
 
     // restore any state in the interface
     if(window.localStorage.getItem("uuid")) {
