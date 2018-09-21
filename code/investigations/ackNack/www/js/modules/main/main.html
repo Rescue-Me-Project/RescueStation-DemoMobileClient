@@ -16,6 +16,10 @@
     <button ion-button round ng-click="vm.initialise();">retry</button>
   </div>
 
+  <div id="restart">
+    <button ion-button round ng-click="vm.restart()">Reset everything and start anew?</button>
+  </div>
+
   <div id="connected" ng-show="vm.pushConnected">
     <p>Connected.</p>
     <div id="role-buttons">

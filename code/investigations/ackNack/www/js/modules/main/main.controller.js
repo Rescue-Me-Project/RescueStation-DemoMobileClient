@@ -40,6 +40,21 @@
 
     vm.subscriptionFeedback = "";
 
+    vm.restart = function restart() {
+      var confirmed = window.confirm("Really clear everything?\nYou will need to do this on both devices.");
+      if(confirmed) {
+        window.localStorage.removeItem("role");
+        window.localStorage.removeItem("uuid");
+        vm.isRescuer = false;
+        vm.isRescuee = false;
+        vm.pushConnected = false;
+        vm.deviceId = "";
+        vm.subscriptionFeedback = "Reset completed.";
+
+        vm.initialise();
+      }
+    };
+
     // restore any state in the interface
     if(window.localStorage.getItem("uuid")) {
       vm.uuid = window.localStorage.getItem("uuid");
@@ -154,12 +169,11 @@
     };
 
     vm.startSubscription = function startSubscription( role ) {
-      alert("NO I AM NOT SUBSCRIBING");
+      //alert("NO I AM NOT SUBSCRIBING");
       // subscribe to "vm.uuid/role"
       var topic = vm.uuid + "_" + role;
       console.log( "subscribing to " + topic );
       pushSrvc.subscribe( topic, function() {
-
       } );
     };
     vm.pingRescuer = function pingRescuer() {
