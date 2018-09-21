@@ -156,7 +156,7 @@
     vm.startSubscription = function startSubscription( role ) {
       alert("NO I AM NOT SUBSCRIBING");
       // subscribe to "vm.uuid/role"
-      var topic = vm.uuid + "/" + role;
+      var topic = vm.uuid + "_" + role;
       console.log( "subscribing to " + topic );
       pushSrvc.subscribe( topic, function() {
 
