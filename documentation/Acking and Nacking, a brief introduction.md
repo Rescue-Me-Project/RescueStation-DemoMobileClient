@@ -58,11 +58,21 @@ Application keys and identifiers can be revoked and regenerated. *Server secrets
 
 ## Messaging directly from FCM's servers to your application
 
+For starting up, it is possible to send a message to an application running on a device. When a device initialises FireBase (using a `PushNotification` object's `.init()` method) a `deviceId` will be sent. In tandem with the Application Key, it's possible to send a message from a HTTP request (using CURL or a desktop HTTP request tool) to your application, capture the payload, and inspect it through `console.log()` (or other introspection) methods.
 
-
-## 
+## In depth: A First interaction with FireBase
 
 There are two phases to using FireBase (and most similar messaging platforms). 
+
+To build an application with Cordova and FireBase, the `phonegap-push-plugin` will be required in your project, and some setup will be required on the Firebase site. 
+
+1. Log in to [Firebase at firebase.google.com](https://firebase.google.com) - you will need a Google account to use it.
+2. Go to the 'console' at [console.firebase.google.com](https://console.firebase.google.com) and create a project.
+3. On the 'Project Overview' tab, add an app by clicking '+ Add App' (choosing Android as your platform, for these notes)
+4. Enter a package name that matches your Cordova project name and click 'Register app'
+5. Download the config file by clicking '⬇️ Download google-services.json'. **This file is critical to enable your Firebase communications in your app, which will not work without it.** Copy it to your project in the
+		* Project root directory (as a sibling of `config.xml`, `package.json`, `www`, `platforms`, `plugins`, `node_modules`)
+		* Into the `platforms/android/` directory (once you have run `cordova platform add android@6.3.0` to add Android to your project build)
 
 ### Phase 1: Signing on for Messaging
 
@@ -113,6 +123,7 @@ After this, messages will be delivered to the `notification` event, which can be
 
 `mypush.on('notification', function( data ) { … } );`
 
+For topic-based subscription, the `onMessageReceived( data )` method of your `PushNotification` handler will be invoked.
 
 A message on Android will generally arrive with the following structure:
 
@@ -134,3 +145,22 @@ where
 ③ is an object into which arbitrary keys can be placed (or had been placed by the message provider)
 ④ indicates that there is extended data to this payload (ie, more than a title and message)
 ⑤ indicates that the application will have been started up in the background to process this message, and this requirement was specified by the payload forwarded from the server (and this being *1* is a requirement for background message handling)
+
+
+
+# Installation top-tips
+
+You did remember to glance through the document before starting, didn't you?
+
+The platforms for consistent behaviour (as referenced in this document) are
+
+NPM Package | Version | Installation command
+-------------|---------|----------------------
+`cordova`      | 7.1.0   | `npm install cordova@7.1.0`
+`phonegap-plugin-push` | 2.2.1 | `npm install --save phonegap-plugin-push@2.2.1`
+
+For the Android build process, use Android 6.3.0
+
+Cordova Platform | Version | Installation command
+-----------------|---------|-----------------------
+Android          | 6.3.0   | `cordova platform add android@6.3.0`
