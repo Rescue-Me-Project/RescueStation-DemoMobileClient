@@ -1,6 +1,6 @@
 # Acking and Nacking, a brief introduction (the Google FCM Way)
 
-FireBase Cloud Messaging (FCM) is Google's cross-platform platform for sending messages (sometimes shown as *notifications*) to mobile applications.
+Firebase Cloud Messaging (FCM) is Google's cross-platform platform for sending messages (sometimes shown as *notifications*) to mobile applications.
 
 There are two sides to this:
 
@@ -36,38 +36,38 @@ To use this script (after you have made sure to save it as something like `serve
 
 1. To send a foreground notification message:
 
-`./server-test.sh [YOUR_SERVER_KEY_FROM_FIREBASE] [YOUR_DEVICE_REGISTRATION_ID] [YOUR_NOTIFICATION_TITLE] [YOUR_NOTIFICATION_MESSAGE]`
+`./server-test.sh [YOUR_SERVER_KEY_FROM_Firebase] [YOUR_DEVICE_REGISTRATION_ID] [YOUR_NOTIFICATION_TITLE] [YOUR_NOTIFICATION_MESSAGE]`
 
 2. To send a background message, which should wake the application in background mode and send in a JSON payload for processing in the 'additionalData' field)
 
-`./server-test.sh [YOUR_SERVER_KEY_FROM_FIREBASE] [YOUR_DEVICE_REGISTRATION_ID] [YOUR_NOTIFICATION_TITLE] [YOUR_NOTIFICATION_MESSAGE] [YOUR_JSON_PAYLOAD]`
+`./server-test.sh [YOUR_SERVER_KEY_FROM_Firebase] [YOUR_DEVICE_REGISTRATION_ID] [YOUR_NOTIFICATION_TITLE] [YOUR_NOTIFICATION_MESSAGE] [YOUR_JSON_PAYLOAD]`
 
 In case 2, the notification title and message are available on the inbound message, but not sent to the notification area.
 
-For both cases, the Server Key is available from the FireBase console when creating the application. The Device Registration ID is returned in the payload when a device registers with FCM and can (briefly) be used as a destination for messages to be sent to. It is a good idea, whilst developing and debugging, to dump this Registration ID to the console so that it is possible to pick it up and use for command-line testing like above.
+For both cases, the Server Key is available from the Firebase console when creating the application. The Device Registration ID is returned in the payload when a device registers with FCM and can (briefly) be used as a destination for messages to be sent to. It is a good idea, whilst developing and debugging, to dump this Registration ID to the console so that it is possible to pick it up and use for command-line testing like above.
 
 Also avoid using spaces or punctuation in the messages when testing; properly escape items when specifying a JSON payload. *This is a minimal tool to support the bare basics for testing, not a solid test suite.*
 
 ## An overview of moving messages from device-to-device
 
-The days of direct device-to-device communication are gone, certainly as an anonymous device operator, doubly certainly as someone using Google's FireBase as a messaging platform. 
+The days of direct device-to-device communication are gone, certainly as an anonymous device operator, doubly certainly as someone using Google's Firebase as a messaging platform. 
 
-To use FireBase, your application's ID must be registered with Google's FireBase platform, and one or more platforms *added* to it. This will generate a number of keys and identifiers which will be used to identify the destination application and message queues that will be used to distinguish the application. This will also generate a *server secret*, which is used to identify and authenticate the application when sending data. 
+To use Firebase, your application's ID must be registered with Google's Firebase platform, and one or more platforms *added* to it. This will generate a number of keys and identifiers which will be used to identify the destination application and message queues that will be used to distinguish the application. This will also generate a *server secret*, which is used to identify and authenticate the application when sending data. 
 
 Application keys and identifiers can be revoked and regenerated. *Server secrets* **cannot**.
 
 ## Messaging directly from FCM's servers to your application
 
-For starting up, it is possible to send a message to an application running on a device. When a device initialises FireBase (using a `PushNotification` object's `.init()` method) a `deviceId` will be sent. In tandem with the Application Key, it's possible to send a message from a HTTP request (using CURL or a desktop HTTP request tool) to your application, capture the payload, and inspect it through `console.log()` (or other introspection) methods.
+For starting up, it is possible to send a message to an application running on a device. When a device initialises Firebase (using a `PushNotification` object's `.init()` method) a `deviceId` will be sent. In tandem with the Application Key, it's possible to send a message from a HTTP request (using CURL or a desktop HTTP request tool) to your application, capture the payload, and inspect it through `console.log()` (or other introspection) methods.
 
-## In depth: A First interaction with FireBase
+## In depth: A First interaction with Firebase
 
-There are two phases to using FireBase (and most similar messaging platforms). 
+There are two phases to using Firebase (and most similar messaging platforms). 
 
-To build an application with Cordova and FireBase, the `phonegap-push-plugin` will be required in your project, and some setup will be required on the Firebase site. 
+To build an application with Cordova and Firebase, the `phonegap-push-plugin` will be required in your project, and some setup will be required on the Firebase site. 
 
-1. Log in to [Firebase at firebase.google.com](https://firebase.google.com) - you will need a Google account to use it.
-2. Go to the 'console' at [console.firebase.google.com](https://console.firebase.google.com) and create a project.
+1. Log in to [Firebase at Firebase.google.com](https://Firebase.google.com) - you will need a Google account to use it.
+2. Go to the 'console' at [console.Firebase.google.com](https://console.Firebase.google.com) and create a project.
 3. On the 'Project Overview' tab, add an app by clicking '+ Add App' (choosing Android as your platform, for these notes)
 4. Enter a package name that matches your Cordova project name and click 'Register app'
 5. Download the config file by clicking '⬇️ Download google-services.json'. **This file is critical to enable your Firebase communications in your app, which will not work without it.** Copy it to your project in the
@@ -76,32 +76,32 @@ To build an application with Cordova and FireBase, the `phonegap-push-plugin` wi
 
 ### Phase 1: Signing on for Messaging
 
-The App must sign in to FireBase. On doing so, a session will be created. During this session, the device will be allocated an arbitrary `deviceId` by the FireBase server, which can be used as a destination for messaging from other devices or from a server.
+The App must sign in to Firebase. On doing so, a session will be created. During this session, the device will be allocated an arbitrary `deviceId` by the Firebase server, which can be used as a destination for messaging from other devices or from a server.
 
-**This deviceId will expire.** It cannot be used for long-term communications.   If the deviceId can be exchanged quickly with another device signed in to FireBase, they can communicate using the deviceId as a 'to' property.
+**This deviceId will expire.** It cannot be used for long-term communications.   If the deviceId can be exchanged quickly with another device signed in to Firebase, they can communicate using the deviceId as a 'to' property.
 
 ### Phase 2: Real-world Messaging
 
-Mobile messaging is built around the idea of centralised push; managed server-based infrastructure generates messages for devices, and posts them to the FireBase messaging platform for delivery to individual devices.
+Mobile messaging is built around the idea of centralised push; managed server-based infrastructure generates messages for devices, and posts them to the Firebase messaging platform for delivery to individual devices.
 
-A device can *subscribe* to messaging in a number of ways (groups, topics, or direct messaging), but only the *server* can generate a message to push. It does this by sending a `HTTP post` to the FireBase system, which manages the delivery.
+A device can *subscribe* to messaging in a number of ways (groups, topics, or direct messaging), but only the *server* can generate a message to push. It does this by sending a `HTTP post` to the Firebase system, which manages the delivery.
 
 It does this due to *authentication* and *secrets*, and to avoid malicious and arbitrary use of the platform by nefarious third parties. 
 
 If the *server secret* is embedded in the mobile application, it is transmitted as part of the `HTTP` payload when posting a message, meaning it is exposed to anyone with a USB cable and the wherewithal to use the Chrome web inspector, or anyone who inspects you application. This is an *extreme vulnerability* and should be avoided. 
 
-Far better practice to have the *server secret* live on a single sever under your control, and your application to send a request to it to then forward on a message to the main FireBase platform.
+Far better practice to have the *server secret* live on a single sever under your control, and your application to send a request to it to then forward on a message to the main Firebase platform.
 
 ### Subscription-based messaging
 
-When a device is signed up with FireBase, it can subscribe to *topics*. A *topic* can be thought of as a communal message box; when the server sends a message to a topic, every device that is subscribed to that topic will receive  a copy of the message sent to it (this is often known as *publish/subscribe*, or *pub/sub*.)
+When a device is signed up with Firebase, it can subscribe to *topics*. A *topic* can be thought of as a communal message box; when the server sends a message to a topic, every device that is subscribed to that topic will receive  a copy of the message sent to it (this is often known as *publish/subscribe*, or *pub/sub*.)
 
 This is particularly useful, as there are no limits to the number of topics that can be created, and no overhead in doing so. Message boxes are created on-demand when either 
 
 1. A message is sent to a specific *topic*
 2. A device subscribes to a specific *topic*
 
-Again - let your server manage the communications to FireBase (technically, FireBase Cloud Messaging) to avoid embedding the *secret* into your application.
+Again - let your server manage the communications to Firebase (technically, Firebase Cloud Messaging) to avoid embedding the *secret* into your application.
 
 ## What's in a message?
 
@@ -113,7 +113,7 @@ When the application is in the foreground, the message will be silently passed i
 
 There's a good overview at the [phonegap-plugin-push github pages](https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/PAYLOAD.md).
 
-When first connecting a running application to FireBase, an `PushNotification.init()` invocation is made. This will trigger an `registration` event. By responding to this event,
+When first connecting a running application to Firebase, an `PushNotification.init()` invocation is made. This will trigger an `registration` event. By responding to this event,
 
 `mypush.on('registration', function( data ) { … } );`
 
