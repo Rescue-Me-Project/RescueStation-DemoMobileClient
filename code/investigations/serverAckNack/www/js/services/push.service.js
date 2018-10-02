@@ -1,7 +1,8 @@
 window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24ElT1VvglHn3z3TSKUiGwzOquhDhE_1kgZHiBKFRF4SdH2bfKhU60OcRz8_yGAag6AJBqt4QSlkBRYInZhB7QksDKHa8";
 // 'AIzaSyCDtz2rQtSs-ZgGvNgvehdmd4t8wpSlLqY'
 
-SERVER_ROOT = "http://localhost:8080/";		
+//SERVER_ROOT = "http://localhost:8080/";
+SERVER_ROOT = "http://digitallabshub:8080/";
 
 (function() {
   'use strict';
