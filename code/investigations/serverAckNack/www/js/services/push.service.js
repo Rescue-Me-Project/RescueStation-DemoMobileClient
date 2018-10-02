@@ -34,9 +34,9 @@ SERVER_ROOT = "http://digitallabshub:8080/";
     service.subscribeCallbackHandler = undefined;
     service.timeoutMs = undefined;
 
-	service.setTimeout = function setTimeout(millis) {
-		service.timeoutMs = millis;
-	}
+	  service.setTimeout = function setTimeout(millis) {
+		  service.timeoutMs = millis;
+	  };
 
     service.initialisePush = function initialisePush( registeredCallback ) {
       service.push = PushNotification.init({
@@ -62,15 +62,50 @@ SERVER_ROOT = "http://digitallabshub:8080/";
       });
     };
 
-	service.sendPayload = function sendPayload( payload ) {
-		var data = {};
-		angular.copy( payload, data );
-		
-		return $http.post(  )
-	
-	}
+	  service.sendPayload = function sendPayload( payload ) {
+		  var data = {};
+		  angular.copy( payload, data );
+
+		  var fullPayload = {
+        'foreground': 'false',
+        'coldstart': 'true',
+        'content-available': '1',
+        priority: 'high',
+
+		  };
+		  if (data.hasOwnProperty('recipient_id')) {
+        fullPayload.to = data.recipient_id;
+        delete data.recipient_id;
+		  }
+      if( fullPayload.hasOwnProperty('notification'))  {
+        fullPayload.notification = data.notification;
+        delete data.notification;
+      }
+      fullPayload.data = data;
+
+      var headers = {
+        'Content-Type':'application/json',
+        'Authorization':'key='+window.FCMKEY+'' //,
+      };
+
+      var sendRequest = { method: 'POST',
+                          url: 'https://fcm.googleapis.com/fcm/send',
+                          data: fullPayload,
+                          headers: headers };
+
+      if(service.timeoutMs!==undefined) {
+      	sendRequest.timeout = service.timeoutMs;
+      }
+
+      console.log('push.service.sendPayload - using ',sendRequest );
+
+      return $http( sendRequest ); // shld send back a promise
+	  };
 
     service.send = function send( recipient, title,  payload ) {
+      console.error("service.send no longer available! ");
+      return;
+      
       var fullPayload = {
         'to': recipient,
         'notification': {
@@ -95,7 +130,7 @@ SERVER_ROOT = "http://digitallabshub:8080/";
                           headers: headers };
       if(service.timeoutMs!==undefined) {
       	sendRequest.timeout = service.timeoutMs;
-      }                          
+      }
       console.log("sendRequest: ", sendRequest);
       $http( sendRequest ).then(
         function success(result) {

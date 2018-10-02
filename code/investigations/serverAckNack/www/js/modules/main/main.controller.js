@@ -23,8 +23,6 @@
     uuid
   ) {
 
-
-
     var vm=angular.extend(this, {
 
     });
@@ -104,10 +102,10 @@
         console.log("controller initialised push, got payload ",data );
         vm.inbound.rendered = "Got connected payload";
         if (data.hasOwnProperty('registrationId')===true) {
-        
+
           vm.registrationId = data.registrationId;
           vm.pushConnected = true;
-                    
+
           pushSrvc.setCallback( vm.handleInbound );
           pushSrvc.setTimeout( vm.MESSAGE_TIMEOUT_SECONDS * 1000 );
         }
@@ -127,13 +125,13 @@
     vm.rescuerStartCodeScan = function rescuerStartCodeScan() {
       console.log("starting a QR code scan");
       cordova.plugins.barcodeScanner.scan(
-        function(result) { // .text .format .cancelled
-          console.log("scanned",result);
+        function(qrResult) { // .text .format .cancelled
+          console.log("scanned",qrResult);
           if(result.cancelled===true) {
             console.log("aborted scan!");
             return;
           } else {
-            if(result.format==="QR_CODE") {
+            if(qrResult.format==="QR_CODE") {
 
 			  // request a connection uuid
 			  $http.post( SERVER_ROOT + "connections" )
@@ -141,23 +139,31 @@
 			  		function(data, status, headers, config) {
 			  		// we have a connection uuid in data .id
 			  		console.log("id: "+data.id, data);
-			  		
+
 			  		vm.uuid = data.id;
-			  		
+
 			  		// construct a outbound message
 			  		var payload = {
 			  			connection_id: vm.uuid,
-			  			sender_id: vm.registrationId;
+			  			sender_id: vm.registrationId,
+			  			recipient_id: qrResult.text,
 			  			message_id: uuid.v4(),
 			  			message_type: vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST,
 			  			sender_role: vm.role,
-			  			payload: "",
-			  			payload_format_type: 0
+			  			payload: data.id,
+			  			payload_format_type: 0,
+              notification: {
+                'title': 'Connection Request',
+                'text': 'You have a connection request from another user',
+                'sound': 'default'
+              }
 			  		};
-					pushSrvs.sendPayload().then(
-					
-					);
-					$http.post( SERVER_ROOT + "/messages" )
+					pushSrvs.sendPayload( payload, ).then(function sentPayloadOkay(data){
+						console.log('initial connection - sent, got', payload, data);
+					}, function errorPayloadSend(err) {
+						console.log('initial connection - failed send, error', payload, error);	
+					});
+					//$http.post( SERVER_ROOT + "/messages" )
 			  	}).error(
 			  		function(error) {
 			  		// failed to get connection uuid from the server
