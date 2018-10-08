@@ -37,12 +37,12 @@
 	vm.ROLE_STRINGS = [ "Rescuer",
 						"Rescuee" ];
 	vm.MESSAGE_TYPE_ID = { ACK : 0,
-						   NACK : 1,
-						   CONNECTION_REQUEST: 2,
-						   CONNECTION_RESPONSE: 3,
-						   MESSAGE: 4 };
+						             NACK : 1,
+						             CONNECTION_REQUEST: 2,
+						             CONNECTION_RESPONSE: 3,
+						             MESSAGE: 4 };
 	vm.ACTIVITY = { SHOW: 1,
-					SCAN: 2 };
+					        SCAN: 2 };
 	vm.MESSAGE_TIMEOUT_SECONDS = 10;
 
     vm.pushConnected = false;
@@ -115,11 +115,13 @@
     vm.setRescuer = function setRescuer( ) {
       console.log("setting as rescuer");
       vm.role = vm.ROLES.RESCUER;
+      vm.activity = vm.ACTIVITY.SHOW;
     };
 
     vm.setRescuee = function setRescuee( ) {
       console.log("setting as rescue*e*");
       vm.role = vm.ROLES.RESCUEE;
+      vm.activity = vm.ACTIVITY.SCAN;
     };
 
     vm.rescuerStartCodeScan = function rescuerStartCodeScan() {
