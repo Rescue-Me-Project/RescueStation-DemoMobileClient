@@ -13,7 +13,7 @@
     'pushSrvc',
     'uuid'
   ];
-
+2
   function mainCtrl(
     $ionicPlatform,
     $scope,
