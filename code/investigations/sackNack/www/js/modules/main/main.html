@@ -43,8 +43,9 @@
     </div>
 
     <div ng-show="vm.activity===vm.ACTIVITY.SHOW">
-      <h3>Connect to a {{vm.ROLE_STRINGS[1-vm.role]}}</h3>
-      <qrcode version="{{5}}" error-correction-level="{{M}}" x-size="{{size}}" data="{{vm.deviceId}}" x-color="{{color}}" x-background="{{background}}" download="false" ></qrcode>
+      <h3>Rescuee</h3>
+      <p>Connect to a {{vm.ROLE_STRINGS[!vm.role]}}</p>
+      <qrcode x-version="{{5}}" x-error-correction-level="{{M}}" x-size="{{size}}" data="{{vm.deviceId}}" x-color="{{color}}" x-background="{{background}}" download="false" ></qrcode>
     </div>
   </div>
 
