@@ -4,6 +4,7 @@
   angular
     .module('main', [
       'angular-uuid',
+      'monospaced.qrcode',
       'push'
     ])
     .config(function($stateProvider){
