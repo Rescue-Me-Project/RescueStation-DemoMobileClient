@@ -42,12 +42,12 @@
       <h3>{{vm.ROLE_STRINGS[vm.role]}}</h3>
       <button ion-button round ng-click="vm.startCodeScan()">Scan a {{vm.ROLE_STRINGS[vm.otherRole]}}'s QR Code</button>
     </div>
-    <qrcode data="hello" >hello</qrcode>
+    
     <div ng-show="vm.activity===vm.ACTIVITY.SHOW">
       <h3>{{vm.ROLE_STRINGS[vm.role]}}</h3>
       <p>Connect to a {{vm.ROLE_STRINGS[vm.otherRole]}}</p>
-      deviceId:{{vm.deviceId}}
-      <qrcode x-version="{{5}}" x-error-correction-level="{{M}}" x-size="{{size}}" data="{{vm.deviceId}}" x-color="{{color}}" x-background="{{background}}" download="false" ></qrcode>
+      registrationId:{{vm.registrationId}}
+      <qrcode x-version="{{5}}" x-error-correction-level="{{M}}" x-size="{{size}}" data="{{vm.registrationId}}" x-color="{{color}}" x-background="{{background}}" download="false" ></qrcode>
     </div>
   </div>
 
