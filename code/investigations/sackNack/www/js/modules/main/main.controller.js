@@ -115,14 +115,14 @@
     vm.setRescuer = function setRescuer( ) {
       console.log("setting as rescuer");
       vm.role = vm.ROLES.RESCUER;
-      vm.otherRole = VM.ROLES[1-vm.role];
+      vm.otherRole = vm.ROLES[1-vm.role];
       vm.activity = vm.ACTIVITY.SHOW;
     };
 
     vm.setRescuee = function setRescuee( ) {
       console.log("setting as rescue*e*");
       vm.role = vm.ROLES.RESCUEE;
-      vm.otherRole = VM.ROLES[1-vm.role];
+      vm.otherRole = vm.ROLES[1-vm.role];
       vm.activity = vm.ACTIVITY.SCAN;
     };
 
