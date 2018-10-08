@@ -127,7 +127,7 @@
       vm.activity = vm.ACTIVITY.SCAN;
     };
 
-    vm.rescuerStartCodeScan = function rescuerStartCodeScan() {
+    vm.startCodeScan = function startCodeScan() {
       console.log("starting a QR code scan");
       cordova.plugins.barcodeScanner.scan(
         function(qrResult) { // .text .format .cancelled

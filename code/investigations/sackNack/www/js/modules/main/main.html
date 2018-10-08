@@ -11,7 +11,8 @@
 
 <!-- orange: rescuee -->
 <!-- green: rescuer -->
-<ion-view id="main" ng-class="{true:'0',false:'1'}[vm.role===0]">
+<ion-view >
+  <div id="main" ng-class="{true:'0',false:'1'}[vm.role===0]">
 
 <!--
   <div id="restart" style="margin-bottom: 2em;">
@@ -39,9 +40,9 @@
   <div style="padding:16px;" ng-show="vm.deviceId!==false">
     <div ng-show="vm.activity===vm.ACTIVITY.SCAN">
       <h3>Rescuer</h3>
-      <button ion-button round ng-click="vm.rescueeStartCodeScan()">Scan a {{vm.ROLE_STRINGS[vm.otherRole]}}'s QR Code</button>
+      <button ion-button round ng-click="vm.startCodeScan()">Scan a {{vm.ROLE_STRINGS[vm.otherRole]}}'s QR Code</button>
     </div>
-
+    <qrcode>hello</qrcode>
     <div ng-show="vm.activity===vm.ACTIVITY.SHOW">
       <h3>Rescuee</h3>
       <p>Connect to a {{vm.ROLE_STRINGS[vm.otherRole]}}</p>
@@ -57,6 +58,6 @@
     <button ion-button round ng-click="vm.pingRescuer();" ng-show="vm.isRescuee===true">Ping Rescuer</button>
     <div>{{vm.subscriptionFeedback}}</div>
   </div>
-
+  </div>
 </ion-view>
 
