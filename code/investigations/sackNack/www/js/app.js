@@ -5,7 +5,6 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', [
   'ionic',
-  'monospaced.qrcode',
   'main'
 //  'momentjs', // ADDED used for dates
 //  'eventsjs'  // ADDED our events module
