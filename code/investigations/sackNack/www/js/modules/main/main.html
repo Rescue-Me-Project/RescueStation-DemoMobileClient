@@ -11,7 +11,7 @@
 
 <!-- orange: rescuee -->
 <!-- green: rescuer -->
-<ion-view id="main" class="{{vm.ROLES[vm.role]}}">
+<ion-view id="main" class="{0:0,1:1}[vm.role]">
 
 <!--
   <div id="restart" style="margin-bottom: 2em;">
@@ -27,9 +27,9 @@
     <p>Connected.</p>
     <div id="role-buttons">
       <button ion-button round ng-class="{'button-positive': vm.role===vm.ROLES.RESCUER}" ng-click="vm.setRescuer(true);">Rescuer</button>
-      <button ion-button round ng-class="{'button-positive': vm.role===vm.ROLES.RESCUER}" ng-click="vm.setRescuee(true);">Rescuee</button>
+      <button ion-button round ng-class="{'button-positive': vm.role===vm.ROLES.RESCUEE}" ng-click="vm.setRescuee(true);">Rescuee</button>
     </div>
-<!-->
+<!--
     <div class="inbound" style="border: 1px solid silver; border: 4px; padding: 11px;" >
       {{vm.inbound.rendered}}
     </div>
