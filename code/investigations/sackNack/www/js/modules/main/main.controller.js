@@ -35,18 +35,18 @@
     vm.role = undefined;
     vm.otherRole = undefined;
 
-	vm.ROLES = { RESCUER : 0,
-			  	 RESCUEE : 1 };
-	vm.ROLE_STRINGS = [ "Rescuer",
-						"Rescuee" ];
-	vm.MESSAGE_TYPE_ID = { ACK : 0,
-						             NACK : 1,
-						             CONNECTION_REQUEST: 2,
-						             CONNECTION_RESPONSE: 3,
-						             MESSAGE: 4 };
-	vm.ACTIVITY = { SHOW: 1,
-					        SCAN: 2 };
-	vm.MESSAGE_TIMEOUT_SECONDS = 10;
+	  vm.ROLES = { RESCUER : 0,
+			  	       RESCUEE : 1 };
+	  vm.ROLE_STRINGS = [ "Rescuer",
+						            "Rescuee" ];
+	  vm.MESSAGE_TYPE_ID = { ACK : 0,
+						               NACK : 1,
+						               CONNECTION_REQUEST: 2,
+						               CONNECTION_RESPONSE: 3,
+						               MESSAGE: 4 };
+	  vm.ACTIVITY = { SHOW: 1,
+					          SCAN: 2 };
+	  vm.MESSAGE_TIMEOUT_SECONDS = 10;
 
     vm.pushConnected = false;
     vm.activity = 0;
@@ -58,44 +58,6 @@
                    rendered: "No messages yet." };
 
     vm.subscriptionFeedback = "";
-
-/*    vm.restart = function restart() {
-      var confirmed = window.confirm("Really clear everything?\nYou will need to do this on both devices.");
-      if(confirmed) {
-        window.localStorage.removeItem("role");
-        window.localStorage.removeItem("uuid");
-        vm.isRescuer = false;
-        vm.isRescuee = false;
-        vm.pushConnected = false;
-        vm.uuid = false;
-        vm.registrationId = "";
-//        pushSrvc.setCallback( vm.dummyCallbackHandler );
-        vm.subscriptionFeedback = "Reset completed.";
-
-        vm.initialise();
-      }
-    };
-    vm.dummyCallbackHandler = function dummyCallbackHandler(i) {
-      console.log(" *** dummyCallbackHandler - inbound rejected containing ",i);
-    };
-
-    // restore any state in the interface
-    if(window.localStorage.getItem("uuid")) {
-      vm.uuid = window.localStorage.getItem("uuid");
-      if(window.localStorage.getItem("role")) {
-        vm.isRescuer = false;
-        vm.isRescuee = false;
-        if(window.localStorage.getItem("role")==="rescuer") {
-          vm.isRescuer = true;
-          vm.isRescuee = false;
-        }
-        if(window.localStorage.getItem("role")==="rescuee") {
-          vm.isRescuer = false;
-          vm.isRescuee = true; 
-        }
-      }
-    }
-*/
 
     vm.initialise = function initialise() {
 
@@ -139,6 +101,7 @@
             return;
           } else {
             if(qrResult.format==="QR_CODE") {
+              var temp_uuid = uuid.v4();
 			        // request a connection uuid
 			        $http( {
                 method: 'POST',
@@ -147,7 +110,7 @@
                   'Content-Type':'application/json'
                 },
                 data: {
-                  'id': uuid.v4()
+                  'id': temp_uuid
                 }
               } )
 			  	      .success(
@@ -156,13 +119,14 @@
 			  		        console.log("id: "+data.id, data);
 
 			  		        vm.uuid = data.id;
+                    vm.connection_request_uuid = uuid.v4();
 
 			  		        // construct a outbound message
 			  		        var payload = {
 			  			        connection_id: vm.uuid,
 			  			        sender_id: vm.registrationId,
 			  			        recipient_id: qrResult.text,
-			  			        message_id: uuid.v4(),
+			  			        message_id: vm.connection_request_uuid,
 			  			        message_type: vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST,
 			  			        sender_role: vm.role,
 			  			        payload: data.id,
@@ -201,6 +165,37 @@
       console.log("got inbound message", data);
       angular.merge( vm.inbound.data, data );
       vm.inbound.rendered = JSON.stringify(vm.inbound.data);
+
+      if (data.hasOwnProperty("additionalData")) {
+        // is this a connection request?
+        if (data.additionalData.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST) {
+          var payload = {
+            // connection request! send back a confirmation
+            connection_id: data.additionalData.connection_id,
+            sender_id: vm.registrationId,
+            recipient_id: data.additionalData.sender_id,
+            message_id: data.additionalData.message_id,
+            message_type: vm.MESSAGE_TYPE_ID.CONNECTION_RESPONSE,
+            sender_role: vm.role,
+            payload: data.additionalData.payload,
+            payload_format_type: 0,
+            notification: {
+              'title': 'Connection confirmaion',
+              'text': 'Another user has confirmed your connection request',
+              'sound': 'default'
+            }
+          };
+          pushSrvc.sendPayload( payload ).then( function sendPayloadOkay(indata) {
+            console.log('intial connection confirmation sent okay - got ',indata );
+            vm.uuid = data.additionalData.connection_id;
+          });
+        }
+        if (data.additionalData.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_RESPONSE) {
+          // this is the confirmation of the other user
+          vm.uuid = data.additionalData.connection_id;
+        }
+      }
+
 
       if(data.hasOwnProperty("additionalData")) {
         if(data.additionalData.event === "rescuee_start") {
