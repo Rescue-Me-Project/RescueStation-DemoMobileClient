@@ -169,7 +169,7 @@
 						console.log('initial connection - failed send, error', payload, error);	
 					});
 					//$http.post( SERVER_ROOT + "/messages" )
-			  	}).error(
+device			  	}).error(
 			  		function(error) {
 			  		// failed to get connection uuid from the server
 			  		alert("Failed requesting a connection UUID.");
