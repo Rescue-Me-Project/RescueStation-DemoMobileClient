@@ -132,58 +132,46 @@
       cordova.plugins.barcodeScanner.scan(
         function(qrResult) { // .text .format .cancelled
           console.log("scanned",qrResult);
-          if(result.cancelled===true) {
+          if(qrResult.cancelled===true) {
             console.log("aborted scan!");
             return;
           } else {
             if(qrResult.format==="QR_CODE") {
+			        // request a connection uuid
+			        $http.post( SERVER_ROOT + "connections" )
+			  	      .success(
+			  		      function(data, status, headers, config) {
+			  		        // we have a connection uuid in data .id
+			  		        console.log("id: "+data.id, data);
 
-			  // request a connection uuid
-			  $http.post( SERVER_ROOT + "connections" )
-			  	.success(
-			  		function(data, status, headers, config) {
-			  		// we have a connection uuid in data .id
-			  		console.log("id: "+data.id, data);
+			  		        vm.uuid = data.id;
 
-			  		vm.uuid = data.id;
-
-			  		// construct a outbound message
-			  		var payload = {
-			  			connection_id: vm.uuid,
-			  			sender_id: vm.registrationId,
-			  			recipient_id: qrResult.text,
-			  			message_id: uuid.v4(),
-			  			message_type: vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST,
-			  			sender_role: vm.role,
-			  			payload: data.id,
-			  			payload_format_type: 0,
-              notification: {
-                'title': 'Connection Request',
-                'text': 'You have a connection request from another user',
-                'sound': 'default'
-              }
-			  		};
-					pushSrvs.sendPayload( payload, ).then(function sentPayloadOkay(data){
-						console.log('initial connection - sent, got', payload, data);
-					}, function errorPayloadSend(err) {
-						console.log('initial connection - failed send, error', payload, error);	
-					});
-					//$http.post( SERVER_ROOT + "/messages" )
-device			  	}).error(
-			  		function(error) {
-			  		// failed to get connection uuid from the server
-			  		alert("Failed requesting a connection UUID.");
-		  		});
-/*
-              var sharedUuid = uuid.v4(); /// TODO GET UUID FROM SWAGGER
-              window.localStorage.setItem("uuid", sharedUuid);
-              console.log("sending UUID of "+sharedUuid);
-              pushSrvc.send( result.text, "contact_from_rescuee",
-                             {rescuer_device_id:vm.registrationId,
-                              "sharedUuid":sharedUuid,
-                              "msgUuid": uuid.v4(),
-                              event:"rescuee_start" } );
-*/
+			  		        // construct a outbound message
+			  		        var payload = {
+			  			        connection_id: vm.uuid,
+			  			        sender_id: vm.registrationId,
+			  			        recipient_id: qrResult.text,
+			  			        message_id: uuid.v4(),
+			  			        message_type: vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST,
+			  			        sender_role: vm.role,
+			  			        payload: data.id,
+			  			        payload_format_type: 0,
+                      notification: {
+                        'title': 'Connection Request',
+                        'text': 'You have a connection request from another user',
+                        'sound': 'default'
+                      }
+			  		        };
+					          pushSrvs.sendPayload( payload, ).then(function sentPayloadOkay(data){
+						          console.log('initial connection - sent, got', payload, data);
+					          }, function errorPayloadSend(err) {
+						          console.log('initial connection - failed send, error', payload, error);
+					          });
+			  	        }).error(
+			  		        function(error) {
+			  		          // failed to get connection uuid from the server
+			  		          alert("Failed requesting a connection UUID.");
+		  		          });
             }
           }
         },

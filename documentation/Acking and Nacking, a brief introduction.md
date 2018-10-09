@@ -157,10 +157,14 @@ The platforms for consistent behaviour (as referenced in this document) are
 NPM Package | Version | Installation command
 -------------|---------|----------------------
 `cordova`      | 7.1.0   | `npm install cordova@7.1.0`
-`phonegap-plugin-push` | 2.2.1 | `npm install --save phonegap-plugin-push@2.2.1`
+`phonegap-plugin-push` | 2.1.2 | `npm install --save phonegap-plugin-push@2.1.2`
 
 For the Android build process, use Android 6.3.0
 
 Cordova Platform | Version | Installation command
 -----------------|---------|-----------------------
 Android          | 6.3.0   | `cordova platform add android@6.3.0`
+
+# Build problems
+
+It's likely you'll get a build problem with certain plugins you may add (barcode scanner 8.0.0 being a major culprit) - if so, the reliable fix is to edit (from the project root) `platforms/android/project.properties`, looking for any lines that reference `com.android.support-v4` and changing them to `com.android.support-v13`.
