@@ -140,7 +140,8 @@
           } else {
             if(qrResult.format==="QR_CODE") {
 			        // request a connection uuid
-			        $http.post( {
+			        $http( {
+                method: 'POST',
                 url: pushSrvc.SERVER_ROOT + "connections",
                 headers: {
                   'Content-Type':'application/json'
