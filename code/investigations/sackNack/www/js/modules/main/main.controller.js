@@ -10,6 +10,7 @@
     '$scope',
     '$state',
     '$sce',
+    '$http',
     'pushSrvc',
     'uuid'
   ];
@@ -19,6 +20,7 @@
     $scope,
     $state,
     $sce,
+    $http,
     pushSrvc,
     uuid
   ) {
