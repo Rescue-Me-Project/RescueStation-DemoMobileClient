@@ -27,6 +27,8 @@ SERVER_ROOT = "http://digitallabshub:8080/";
   ) {
     var service = {};
 
+    service.SERVER_ROOT = SERVER_ROOT;
+
     service.push = undefined;
     service.registrationId = undefined;
     service.callbackHandler = undefined;
@@ -83,6 +85,7 @@ SERVER_ROOT = "http://digitallabshub:8080/";
         fullPayload.notification = data.notification;
         delete data.notification;
       }
+
       fullPayload.data = data;
 
       var headers = {
