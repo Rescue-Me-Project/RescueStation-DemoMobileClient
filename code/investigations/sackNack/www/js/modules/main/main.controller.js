@@ -173,7 +173,7 @@
                         'sound': 'default'
                       }
 			  		        };
-					          pushSrvs.sendPayload( payload ).then(function sentPayloadOkay(data){
+					          pushSrvc.sendPayload( payload ).then(function sentPayloadOkay(data){
 						          console.log('initial connection - sent, got', payload, data);
 					          }, function errorPayloadSend(err) {
 						          console.log('initial connection - failed send, error', payload, error);
