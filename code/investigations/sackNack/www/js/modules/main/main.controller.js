@@ -120,12 +120,12 @@
 			  		        // we have a connection uuid in data .id
 			  		        console.log("id: "+data.id, data);
 
-			  		        vm.uuid = data.id;
+			  		        //vm.uuid = data.id; // forget it - we always get he string 'id' back!
                     vm.connection_request_uuid = uuid.v4();
 
 			  		        // construct a outbound message
 			  		        var payload = {
-			  			        connection_id: vm.uuid,
+			  			        connection_id: temp_uuid, //vm.uuid,
 			  			        sender_id: vm.registrationId,
 			  			        recipient_id: qrResult.text,
 			  			        message_id: vm.connection_request_uuid,
