@@ -140,7 +140,15 @@
           } else {
             if(qrResult.format==="QR_CODE") {
 			        // request a connection uuid
-			        $http.post( SERVER_ROOT + "connections" )
+			        $http.post( {
+                url: SERVER_ROOT + "connections",
+                headers: {
+                  'Content-Type':'application.json'
+                },
+                data: {
+                  'id': uuid.v4()
+                }
+              } )
 			  	      .success(
 			  		      function(data, status, headers, config) {
 			  		        // we have a connection uuid in data .id
@@ -164,7 +172,7 @@
                         'sound': 'default'
                       }
 			  		        };
-					          pushSrvs.sendPayload( payload, ).then(function sentPayloadOkay(data){
+					          pushSrvs.sendPayload( payload ).then(function sentPayloadOkay(data){
 						          console.log('initial connection - sent, got', payload, data);
 					          }, function errorPayloadSend(err) {
 						          console.log('initial connection - failed send, error', payload, error);
