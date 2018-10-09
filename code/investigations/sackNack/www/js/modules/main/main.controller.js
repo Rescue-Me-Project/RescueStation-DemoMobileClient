@@ -103,7 +103,7 @@
             if(qrResult.format==="QR_CODE") {
               var temp_uuid = uuid.v4();
 			        // request a connection uuid
-			        $http( {
+              var connection_payload = {
                 method: 'POST',
                 url: pushSrvc.SERVER_ROOT + "connections",
                 headers: {
@@ -112,7 +112,9 @@
                 data: {
                   'id': temp_uuid
                 }
-              } )
+              };
+              console.log("requesting connection ID creation - sending ", connection_payload );
+			        $http( connection_payload )
 			  	      .success(
 			  		      function(data, status, headers, config) {
 			  		        // we have a connection uuid in data .id
