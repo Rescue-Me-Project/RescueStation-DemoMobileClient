@@ -105,7 +105,7 @@
 			        // request a connection uuid
               var connection_payload = {
                 method: 'POST',
-                url: pushSrvc.SERVER_ROOT + "connections",
+                url: pushSrvc.SERVER_ROOT + "/connections",
                 headers: {
                   'Content-Type':'application/json'
                 },
