@@ -1,8 +1,4 @@
-window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24ElT1VvglHn3z3TSKUiGwzOquhDhE_1kgZHiBKFRF4SdH2bfKhU60OcRz8_yGAag6AJBqt4QSlkBRYInZhB7QksDKHa8";
-// 'AIzaSyCDtz2rQtSs-ZgGvNgvehdmd4t8wpSlLqY'
-
-//SERVER_ROOT = "http://localhost:8080/";
-SERVER_ROOT = "http://digitallabshub:8080/";
+SERVER_ROOT = "http://digitallabshub:8080";
 
 (function() {
   'use strict';
@@ -67,41 +63,15 @@ SERVER_ROOT = "http://digitallabshub:8080/";
     // pass in a notification object in payload.notification
     // pass in recipient device in payload.recipient_id
 	  service.sendPayload = function sendPayload( payload ) {
-		  var data = {};
-		  angular.copy( payload, data );
-
-		  var fullPayload = {
-        'foreground': 'false',
-        'coldstart': 'true',
-        'content-available': '1',
-        priority: 'high',
-
-		  };
-		  if (data.hasOwnProperty('recipient_id')) {
-        fullPayload.to = data.recipient_id;
-        delete data.recipient_id;
-		  }
-      if( fullPayload.hasOwnProperty('notification'))  {
-        fullPayload.notification = data.notification;
-        delete data.notification;
-      }
-
-      fullPayload.data = data;
-
-      var headers = {
-        'Content-Type':'application/json',
-        'Authorization':'key='+window.FCMKEY+'' //,
-      };
 
       var sendRequest = { method: 'POST',
-                          url: 'https://fcm.googleapis.com/fcm/send',
-                          data: fullPayload,
-                          headers: headers };
+                          url: SERVER_ROOT + '/messages',
+                          data: JSON.stringify(payload)
+                         };
 
       if(service.timeoutMs!==undefined) {
       	sendRequest.timeout = service.timeoutMs;
       }
-
       console.log('push.service.sendPayload - using ',sendRequest );
 
       return $http( sendRequest ); // shld send back a promise

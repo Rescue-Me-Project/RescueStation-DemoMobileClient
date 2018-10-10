@@ -120,8 +120,9 @@
 			  		        // we have a connection uuid in data .id
 			  		        console.log("id: "+data.id, data);
 
-			  		        //vm.uuid = data.id; // forget it - we always get he string 'id' back!
-                    vm.connection_request_uuid = uuid.v4();
+			  		        vm.temp_uuid = data.id; 
+			  		        
+                    vm.connection_request_uuid =  uuid.v4();
 
 			  		        // construct a outbound message
 			  		        var payload = {
@@ -144,11 +145,10 @@
 					          }, function errorPayloadSend(err) {
 						          console.log('initial connection - failed send, error', payload, error);
 					          });
-			  	        }).error(
-			  		        function(error) {
-			  		          // failed to get connection uuid from the server
-			  		          alert("Failed requesting a connection UUID.");
-		  		          });
+			  	        }).error( function(error) {
+			  		        // failed to get connection uuid from the server
+			  		        alert("Failed requesting a connection UUID.");
+		  		        });
             }
           }
         },
@@ -190,6 +190,8 @@
           pushSrvc.sendPayload( payload ).then( function sendPayloadOkay(indata) {
             console.log('intial connection confirmation sent okay - got ',indata );
             vm.uuid = data.additionalData.connection_id;
+          }, function failedSending(err) {
+            console.log('error sending first message - ',err);
           });
         }
         if (data.additionalData.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_RESPONSE) {
