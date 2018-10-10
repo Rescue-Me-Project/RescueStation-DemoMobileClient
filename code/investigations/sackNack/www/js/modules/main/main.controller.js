@@ -142,7 +142,7 @@
 			  		        };
 					          pushSrvc.sendPayload( payload ).then(function sentPayloadOkay(data){
 						          console.log('initial connection - sent, got', payload, data);
-					          }, function errorPayloadSend(err) {
+					          }, function errorPayloadSend( error ) {
 						          console.log('initial connection - failed send, error', payload, error);
 					          });
 			  	        }).error( function(error) {
