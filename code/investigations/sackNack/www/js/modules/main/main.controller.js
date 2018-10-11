@@ -124,7 +124,7 @@
 
                     //vm.connection_request_uuid =  uuid.v4();
 
-			  		        // construct a outbound message
+			  		        // construct a outbound messag
 			  		        var payload = { 
 			  			        connection_id: data.id,
 			  			        sender_id: vm.registrationId,
@@ -136,7 +136,23 @@
 			  		        };
 					          pushSrvc.sendPayload( payload ).then(function sentPayloadOkay(data){
 						          console.log('initial connection - sent, got', payload, data);
-					          }, function errorPayloadSend( error ) {
+                      // DIRTY FUDGE - SEND TO OURSELVES!
+			  		          var payload = { 
+			  			          connection_id: data.id,
+			  			          sender_id: vm.registrationId,
+			  			          message_id: temp_uuid, 
+			  			          message_type: vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST,
+			  			          sender_role: vm.role,
+			  			          payload: vm.registrationId,
+			  			          payload_format_type: 0
+			  		          };
+					            pushSrvc.sendPayload( payload ).then(function sentPayloadOkay(data){
+                        console.log("FUDGED TO SELF", payload);
+                      }
+                      // END OF FUDGE
+
+
+                    }, function errorPayloadSend( error ) {
 						          console.log('initial connection - failed send, error', payload, error);
 					          });
 			  	        }).error( function(error) {
