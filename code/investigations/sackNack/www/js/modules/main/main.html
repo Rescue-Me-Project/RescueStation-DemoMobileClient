@@ -30,12 +30,15 @@
       <button ion-button round ng-class="{'button-positive': vm.role===vm.ROLES.RESCUER}" ng-click="vm.setRescuer(true);">Rescuer</button>
       <button ion-button round ng-class="{'button-positive': vm.role===vm.ROLES.RESCUEE}" ng-click="vm.setRescuee(true);">Rescuee</button>
     </div>
-<!--
-    <div class="inbound" style="border: 1px solid silver; border: 4px; padding: 11px;" >
-      {{vm.inbound.rendered}}
-    </div>
--->
+    <!--
+         <div class="inbound" style="border: 1px solid silver; border: 4px; padding: 11px;" >
+         {{vm.inbound.rendered}}
+         </div>
+    -->
   </div>
+
+  <p>{{vm.registrationId}}</p>
+
 
   <div style="padding:16px;" ng-show="vm.deviceId!==false">
     <div ng-show="vm.activity===vm.ACTIVITY.SCAN">
