@@ -121,24 +121,18 @@
 			  		        console.log("id: "+data.id, data);
 
 			  		        vm.temp_uuid = data.id; 
-			  		        
-                    vm.connection_request_uuid =  uuid.v4();
+
+                    //vm.connection_request_uuid =  uuid.v4();
 
 			  		        // construct a outbound message
-			  		        var payload = {
-			  			        connection_id: temp_uuid, //vm.uuid,
+			  		        var payload = { 
+			  			        connection_id: data.id,
 			  			        sender_id: vm.registrationId,
-			  			        recipient_id: qrResult.text,
-			  			        message_id: vm.connection_request_uuid,
+			  			        message_id: temp_uuid, 
 			  			        message_type: vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST,
 			  			        sender_role: vm.role,
-			  			        payload: data.id,
-			  			        payload_format_type: 0,
-                      notification: {
-                        'title': 'Connection Request',
-                        'text': 'You have a connection request from another user',
-                        'sound': 'default'
-                      }
+			  			        payload: qrResult.text,
+			  			        payload_format_type: 0
 			  		        };
 					          pushSrvc.sendPayload( payload ).then(function sentPayloadOkay(data){
 						          console.log('initial connection - sent, got', payload, data);

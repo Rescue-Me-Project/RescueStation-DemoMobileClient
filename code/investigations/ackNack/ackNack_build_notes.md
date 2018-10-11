@@ -121,4 +121,14 @@ Subsacribing to topics with / in their path caused a 400 and unhandled core dump
 
 
 
+--------------
+
+# Server side
+
+[via](https://firebase.google.com/docs/admin/setup) 
+
+(not using `npm install firebase-admin --save` method)
+
+
+
 
