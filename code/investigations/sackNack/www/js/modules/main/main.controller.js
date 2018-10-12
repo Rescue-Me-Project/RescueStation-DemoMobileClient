@@ -158,38 +158,35 @@
     };
 
     vm.handleInbound = function handleInbound( data ) {
-      console.log("got inbound message", data.additionalData);
-      angular.merge( vm.inbound.data, data.additionalData );
+      console.log("got inbound message", data);
+      angular.merge( vm.inbound.data, data.payload );
       vm.inbound.rendered = JSON.stringify(vm.inbound.data);
 
-      if (data.hasOwnProperty("additionalData")) {
-        if(data.additionalData.hasOwnProperty("payload")) {
-          var payload = data.additionalData.payload;
-          // is this a connection request?
-          if (payload.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST) {
-            // connection request! send back a confirmation
-            var responsePayload = {
-              connection_id: payload.connection_id,
-              sender_id: vm.registrationId,
-              recipient_id: payload.sender_id,
-              message_id: payload.message_id,
-              message_type: vm.MESSAGE_TYPE_ID.CONNECTION_RESPONSE,
-              sender_role: vm.role,
-              payload: payload.payload,
-              payload_format_type: 0
-            };
-            pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
-              console.log('intial connection confirmation sent okay - got ',indata );
-              vm.uuid = payload.connection_id;
-            }, function failedSending(err) {
-              console.log('error sending first message - ',err);
-            });
-          }
-          if (payload.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_RESPONSE) {
-            // this is the confirmation of the other user
+      if(data.additionalData.hasOwnProperty("payload")) {
+        var payload = data.payload;
+        // is this a connection request?
+        if (payload.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST) {
+          // connection request! send back a confirmation
+          var responsePayload = {
+            connection_id: payload.connection_id,
+            sender_id: vm.registrationId,
+            recipient_id: payload.sender_id,
+            message_id: payload.message_id,
+            message_type: vm.MESSAGE_TYPE_ID.CONNECTION_RESPONSE,
+            sender_role: vm.role,
+            payload: payload.payload,
+            payload_format_type: 0
+          };
+          pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
+            console.log('intial connection confirmation sent okay - got ',indata );
             vm.uuid = payload.connection_id;
-
-          }
+          }, function failedSending(err) {
+            console.log('error sending first message - ',err);
+          });
+        }
+        if (payload.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_RESPONSE) {
+          // this is the confirmation of the other user
+          vm.uuid = payload.connection_id;
         }
       }
 
