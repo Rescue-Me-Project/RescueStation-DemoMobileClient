@@ -131,7 +131,7 @@
 			  			        message_id: temp_uuid, 
 			  			        message_type: vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST,
 			  			        sender_role: vm.role,
-			  			        payload: "arse", //qrResult.text,
+			  			        payload: qrResult.text,
 			  			        payload_format_type: 0
 			  		        };
 					          pushSrvc.sendPayload( payload ).then(function sentPayloadOkay(data){
