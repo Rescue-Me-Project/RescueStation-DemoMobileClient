@@ -52,7 +52,11 @@ SERVER_ROOT = "http://digitallabshub:8080";
       });
       service.push.on('notification', function(data){
         console.log("push.notification event, ", data);
-        service.callbackHandler( data );
+        if(data.hasOwnProperty("payload")) {
+          service.callbackHandler( data );
+        } else {
+          console.log("inbound message missing a payload property");
+        }
       });
 
       service.push.on('error', function (error) {
