@@ -162,7 +162,7 @@
       angular.merge( vm.inbound.data, data.payload );
       vm.inbound.rendered = JSON.stringify(vm.inbound.data);
 
-      if(data.additionalData.hasOwnProperty("payload")) {
+      if(data.hasOwnProperty("payload")) {
         var payload = data.payload;
         // is this a connection request?
         if (payload.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST) {
@@ -192,25 +192,25 @@
 
 
       if(data.hasOwnProperty("additionalData")) {
-        if(data.additionalData.event === "rescuee_start") {
+        if(data.event === "rescuee_start") {
           window.localStorage.setItem("role","rescuer");
           // log our UUID
-          console.log("got sharedUuid of "+data.additionalData.sharedUuid);
-          window.localStorage.setItem("uuid", data.additionalData.sharedUuid);
-          vm.uuid = data.additionalData.sharedUuid;
+          console.log("got sharedUuid of "+data.sharedUuid);
+          window.localStorage.setItem("uuid", data.sharedUuid);
+          vm.uuid = data.sharedUuid;
 
           // compose an ack message back
-          pushSrvc.send( data.additionalData.rescuer_device_id,
+          pushSrvc.send( data.rescuer_device_id,
                          "acknowledgement_from_rescuer",
                          { rescuee_device_id:vm.registrationId,
-                           "sharedUuid":data.additionalData.sharedUuid,
+                           "sharedUuid":data.sharedUuid,
                            event:"ack_from_rescuer" } );
 
           vm.startSubscription("rescuer");
         }
-        if(data.additionalData.event === "ack_from_rescuer") {
+        if(data.event === "ack_from_rescuer") {
           // do our UUIDs match?
-          if( window.localStorage.getItem("uuid")===data.additionalData.sharedUuid ) {
+          if( window.localStorage.getItem("uuid")===data.sharedUuid ) {
             alert("UUIDs match, good to go");
             vm.uuid = window.localStorage.getItem("uuid");
             window.localStorage.setItem("role","rescuee");
@@ -220,7 +220,7 @@
           } else {
             alert("Error: Mismatched UUIDs!");
             console.log("stored UUID",window.localStorage.getItem("uuid"));
-            console.log("roundtripped UUID",data.additionalData.sharedUuid);
+            console.log("roundtripped UUID",data.sharedUuid);
           }
           // pof
           //alert("ack back");
