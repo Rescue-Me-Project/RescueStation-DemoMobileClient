@@ -136,6 +136,7 @@
 			  		        };
 					          pushSrvc.sendPayload( payload ).then(function sentPayloadOkay(data){
 						          console.log('initial connection - sent, got', payload, data);
+/*
                       // DIRTY FUDGE - SEND TO OURSELVES!
 			  		          var p2 = { 
 			  			          connection_id: data.id,
@@ -150,6 +151,7 @@
                         console.log("FUDGED TO SELF", payload);
                       });
                       // END OF FUDGE
+*/
                     }, function errorPayloadSend( error ) {
 						          console.log('initial connection - failed send, error', payload, error);
 					          });
