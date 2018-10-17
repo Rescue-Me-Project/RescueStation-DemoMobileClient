@@ -59,6 +59,8 @@
 
     vm.subscriptionFeedback = "";
 
+    vm.pendingMessage = {};
+
     vm.initialise = function initialise() {
 
       vm.inbound.rendered = "No registrationId yet...";
@@ -120,15 +122,13 @@
 			  		        // we have a connection uuid in data .id
 			  		        console.log("id: "+data.id, data);
 
-			  		        vm.uuid = data.id; 
+//			  		        vm.uuid = data.id;
 
-                    //vm.connection_request_uuid =  uuid.v4();
-
-			  		        // construct a outbound messag
-			  		        var payload = { 
+			  		        // construct a outbound message
+			  		        var payload = {
 			  			        connection_id: data.id,
 			  			        sender_id: vm.registrationId,
-			  			        message_id: temp_uuid, 
+			  			        message_id: temp_uuid,
 			  			        message_type: vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST,
 			  			        sender_role: vm.role,
 			  			        payload: qrResult.text,
@@ -157,6 +157,24 @@
       );
     };
 
+    vm.sendMessageFromRescuer = function sendMessageFromRescuer(message) {
+			// construct a outbound message
+			var payload = {
+			  connection_id: vm.uuid,
+			  sender_id: vm.registrationId,
+			  message_id: uuid.v4(),
+			  message_type: vm.MESSAGE_TYPE_ID.MESSAGE,
+			  sender_role: vm.role,
+			  payload: message,
+			  payload_format_type: 0
+			};
+			pushSrvc.sendPayload( payload ).then(function sentPayloadOkay(data){
+				console.log('initial connection - sent, got', payload, data);
+      }, function errorPayloadSend( error ) {
+				console.log('initial connection - failed send, error', payload, error);
+			});
+    };
+
     vm.handleInbound = function handleInbound( data ) {
       console.log("got inbound message", data);
       angular.merge( vm.inbound.data, data.payload );
@@ -181,68 +199,66 @@
           pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
             console.log('intial connection confirmation sent okay - got ',indata );
             vm.uuid = payload.connection_id;
+            // subscribe to this topic
+            pushSrvc.subscribe( vm.uuid );
           }, function failedSending(err) {
             console.log('error sending first message - ',err);
+            alert("Problem sending confirmation payload.");
           });
         }
         if (payload.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_RESPONSE) {
           // this is the confirmation of the other user
           vm.uuid = payload.connection_id;
+          // subscribe to this topic
+          pushSrvc.subscribe( vm.uuid );
         }
-      }
 
-
-      if(data.hasOwnProperty("additionalData")) {
-        if(data.event === "rescuee_start") {
-          window.localStorage.setItem("role","rescuer");
-          // log our UUID
-          console.log("got sharedUuid of "+data.sharedUuid);
-          window.localStorage.setItem("uuid", data.sharedUuid);
-          vm.uuid = data.sharedUuid;
-
-          // compose an ack message back
-          pushSrvc.send( data.rescuer_device_id,
-                         "acknowledgement_from_rescuer",
-                         { rescuee_device_id:vm.registrationId,
-                           "sharedUuid":data.sharedUuid,
-                           event:"ack_from_rescuer" } );
-
-          vm.startSubscription("rescuer");
-        }
-        if(data.event === "ack_from_rescuer") {
-          // do our UUIDs match?
-          if( window.localStorage.getItem("uuid")===data.sharedUuid ) {
-            alert("UUIDs match, good to go");
-            vm.uuid = window.localStorage.getItem("uuid");
-            window.localStorage.setItem("role","rescuee");
-
-            vm.startSubscription("rescuee");
-
-          } else {
-            alert("Error: Mismatched UUIDs!");
-            console.log("stored UUID",window.localStorage.getItem("uuid"));
-            console.log("roundtripped UUID",data.sharedUuid);
-          }
-          // pof
-          //alert("ack back");
+        if (payload.message_type === vm.MESSAGE_TYPE_ID.MESSAGE) {
+          // an inbound message
+          vm.pendingMessage = payload.payload;
+          // send a delivery ack before displaying
+          var responsePayload = {
+            connection_id: vm.uuid,
+            sender_id: vm.registrationId,
+            recipient_id: payload.sender_id,
+            message_id: payload.message_id,
+            message_type: vm.MESSAGE_TYPE_ID.ACK,
+            sender_role: vm.role,
+            payload: 0,
+            payload_format_type: 0
+          };
+          pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
+            console.log('message '+responsePayload.messageId+' acknowledgement delivered okay.');
+            alert(payload.payload);
+          }, function failedSending(err) {
+            console.log('error acknowledgeing '+responsePayload.message_id);
+            alert("Problem acknowledgeing an inbound message.");
+          });
         }
       }
     };
 
-    vm.startSubscription = function startSubscription( role ) {
-      //alert("NO I AM NOT SUBSCRIBING");
-      // subscribe to "vm.uuid/role"
-      var topic = vm.uuid + "_" + role;
-      console.log( "subscribing to " + topic );
-      pushSrvc.subscribe( topic, function() {
-      } );
+    vm.pingOther = function pingOther() {
+      var responsePayload = {
+        connection_id: vm.uuid,
+        sender_id: vm.registrationId,
+        topic: vm.uuid, //recipient_id: "Hello",
+        message_id: uuid.v4(),
+        message_type: vm.MESSAGE_TYPE_ID.MESSAGE,
+        sender_role: vm.role,
+        payload: "hello",
+        payload_format_type: 0
+      };
+      pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
+        console.log('topic message '+responsePayload.messageId+' delivered okay.');
+        alert(payload.payload);
+      }, function failedSending(err) {
+        console.log('error sending '+responsePayload.message_id);
+        alert("Problem sending message.");
+      });
+
     };
-    vm.pingRescuer = function pingRescuer() {
-      pushSrvc.sendToTopic( vm.uuid + "_" + "rescuer", "from the rescuee", {"message":"hello from rescuee" } );
-    };
-    vm.pingRescuee = function pingRescuee() {
-      pushSrvc.sendToTopic( vm.uuid + "_" + "rescuee", "from the rescuer", {"message":"hello from rescuer" } );
-    };
+
     vm.initialise();
 
   }

@@ -10,15 +10,9 @@ SERVER_ROOT = "http://digitallabshub:8080";
   ;
 
   pushSrvc.$inject = [
-//    '$q',
-//    '$timeout',
-//    '$sce',
     '$http'
   ];
   function pushSrvc(
-//    $q,
-//    $timeout,
-//    $sce,
     $http
   ) {
     var service = {};
@@ -132,8 +126,6 @@ SERVER_ROOT = "http://digitallabshub:8080";
     // subscription handling
 
     service.subscribe = function subscribe( topic ) {
-      console.log("SKIPPING SUBSCRIPTION FOR NOW", topic);
-      //return;
       service.push.subscribe( topic, function subscribeSuccess(){
         console.log("push.service - subscription to '"+topic+"' successful!");
 

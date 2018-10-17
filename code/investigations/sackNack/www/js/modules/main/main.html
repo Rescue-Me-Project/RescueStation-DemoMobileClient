@@ -21,7 +21,7 @@
 -->
 
   <div id="not-connected" ng-show="!vm.pushConnected">Connecting...
-    <button ion-button round ng-click="vm.initialise();">retry</button>
+    <button ion-button round ng-click="vm.initialise();">Retry</button>
   </div>
 
   <div id="connected" ng-show="vm.pushConnected===true">
@@ -30,11 +30,11 @@
       <button ion-button round ng-class="{'button-positive': vm.role===vm.ROLES.RESCUER}" ng-click="vm.setRescuer(true);">Rescuer</button>
       <button ion-button round ng-class="{'button-positive': vm.role===vm.ROLES.RESCUEE}" ng-click="vm.setRescuee(true);">Rescuee</button>
     </div>
-    <!--
-         <div class="inbound" style="border: 1px solid silver; border: 4px; padding: 11px;" >
-         {{vm.inbound.rendered}}
-         </div>
-    -->
+
+    <div class="inbound" style="border: 1px solid silver; border: 4px; padding: 11px;" >
+      {{vm.inbound.rendered}}
+    </div>
+
   </div>
 
   <div style="padding:16px;" ng-show="vm.deviceId!==false">
@@ -54,9 +54,10 @@
   <div ng-show="vm.uuid!=false">
     UUID:{{vm.uuid}}
 
-    <button ion-button round ng-click="vm.pingRescuee();" ng-show="vm.isRescuer===true">Ping Rescuee</button>
-    <button ion-button round ng-click="vm.pingRescuer();" ng-show="vm.isRescuee===true">Ping Rescuer</button>
     <div>{{vm.subscriptionFeedback}}</div>
+    <div id="pingOther">
+      <button ion-button round ng-click="vm.pingOther();" >Ping the other!</button>
+    </div>
   </div>
 </ion-view>
 
