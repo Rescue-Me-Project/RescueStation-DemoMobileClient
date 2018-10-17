@@ -120,7 +120,7 @@
 			  		        // we have a connection uuid in data .id
 			  		        console.log("id: "+data.id, data);
 
-			  		        vm.temp_uuid = data.id; 
+			  		        vm.uuid = data.id; 
 
                     //vm.connection_request_uuid =  uuid.v4();
 
@@ -160,7 +160,8 @@
     vm.handleInbound = function handleInbound( data ) {
       console.log("got inbound message", data);
       angular.merge( vm.inbound.data, data.payload );
-      vm.inbound.rendered = JSON.stringify(vm.inbound.data);
+      vm.inbound.rendered = "Got inbound message - type "+
+        Object.keys(vm.MESSAGE_TYPE_ID)[ data.payload.message_type ];
 
       if(data.hasOwnProperty("payload")) {
         var payload = data.payload;

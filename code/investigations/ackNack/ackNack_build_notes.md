@@ -130,5 +130,7 @@ Subsacribing to topics with / in their path caused a 400 and unhandled core dump
 (not using `npm install firebase-admin --save` method)
 
 
+-----
 
+when sending data (through a server), it's *critical* that the payload stored in .data is a JSON encoded string; firebase and the wild world of phonegap-plugin-push will deal with decoding this when it arrives at other devices.
 
