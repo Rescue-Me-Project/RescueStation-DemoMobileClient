@@ -177,11 +177,12 @@
 
     vm.handleInbound = function handleInbound( data ) {
       console.log("got inbound message", data);
-      angular.merge( vm.inbound.data, data.payload );
-      vm.inbound.rendered = "Got inbound message - type "+
-        Object.keys(vm.MESSAGE_TYPE_ID)[ data.payload.message_type ];
 
       if(data.hasOwnProperty("payload")) {
+        angular.merge( vm.inbound.data, data.payload );
+        vm.inbound.rendered = "Got inbound message - type "+
+          Object.keys(vm.MESSAGE_TYPE_ID)[ data.payload.message_type ];
+
         var payload = data.payload;
         // is this a connection request?
         if (payload.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST) {
