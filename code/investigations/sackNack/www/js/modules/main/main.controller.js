@@ -263,7 +263,7 @@
       };
       pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
         console.log('topic message '+responsePayload.messageId+' delivered okay.');
-        alert(payload.payload);
+        alert(responsePayload.payload);
       }, function failedSending(err) {
         console.log('error sending '+responsePayload.message_id);
         alert("Problem sending message.");
