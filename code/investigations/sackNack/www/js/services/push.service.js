@@ -70,7 +70,7 @@ SERVER_ROOT = "http://digitallabshub:8080";
 
       var sendRequest = { method: 'POST',
                           url: SERVER_ROOT + '/messages',
-                          data: "XYZ" //JSON.stringify(payload)
+                          data: JSON.stringify(payload)
                          };
 
       if(service.timeoutMs!==undefined) {
