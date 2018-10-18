@@ -258,7 +258,7 @@
         message_id: uuid.v4(),
         message_type: vm.MESSAGE_TYPE_ID.MESSAGE,
         sender_role: vm.role,
-        payload: "hi:there", //'{ "message" : "hello" }' ,
+        payload: "hithere", //'{ "message" : "hello" }' ,
         payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.INTEGER
       };
       pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
