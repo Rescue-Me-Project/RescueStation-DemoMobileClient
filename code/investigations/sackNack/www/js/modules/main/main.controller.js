@@ -68,7 +68,7 @@
     vm.initialise = function initialise() {
 
       vm.inbound.rendered = "No registrationId yet...";
-
+  
       pushSrvc.initialisePush( function deviceNowConnected( data ){
         console.log("controller initialised push, got payload ",data );
         vm.inbound.rendered = "Got connected payload";
@@ -180,7 +180,7 @@
     };
 
     vm.handleInbound = function handleInbound( data ) {
-      console.log("got inbound message", data);
+      console.log("got inbound mqressage", data);
 
       if(data.hasOwnProperty("payload")) {
         angular.merge( vm.inbound.data, data.payload );
@@ -258,7 +258,7 @@
         message_id: uuid.v4(),
         message_type: vm.MESSAGE_TYPE_ID.MESSAGE,
         sender_role: vm.role,
-        payload: '{ "message" : "hello" }' ,
+        payload: "hi:there", //'{ "message" : "hello" }' ,
         payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.INTEGER
       };
       pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
