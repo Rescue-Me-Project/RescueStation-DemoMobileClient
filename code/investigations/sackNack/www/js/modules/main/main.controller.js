@@ -258,8 +258,8 @@
         message_id: uuid.v4(),
         message_type: vm.MESSAGE_TYPE_ID.MESSAGE,
         sender_role: vm.role,
-        payload: JSON.stringify( { "message":"hello"} ),
-        payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.JSON
+        payload: 999,//JSON.stringify( { "message":"hello"} ),
+        payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.INTEGER
       };
       pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
         console.log('topic message '+responsePayload.messageId+' delivered okay.');
