@@ -129,8 +129,8 @@ SERVER_ROOT = "http://digitallabshub:8080";
     // subscription handling
 
     service.subscribe = function subscribe( topic ) {
-      service.push.subscribe( "/topic/"+topic, function subscribeSuccess(){
-        console.log("push.service - subscription to '/topic/"+topic+"' successful!");
+      service.push.subscribe( topic, function subscribeSuccess(){
+        console.log("push.service - subscription to "+topic+"' successful!");
 
         service.push.on('registration', function (data) {
           alert('registrationId:' + data.registrationId);
