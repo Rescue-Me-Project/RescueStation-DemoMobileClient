@@ -215,7 +215,7 @@
             pushSrvc.subscribe( vm.uuid );
           }, function failedSending(err) {
             console.log('error sending first message - ',err);
-            alert("Problem sending confirmation payload.");
+            alert("Problem sending confirmation payload - "+err);
           });
         }
         if (payload.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_RESPONSE) {
