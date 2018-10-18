@@ -63,14 +63,15 @@ SERVER_ROOT = "http://digitallabshub:8080";
     };
 
     // pass in a notification object in payload.notification
-    // pass in recipient device in payload.recipient_id
+    // pass in recipient device in payload.recipient_id,
+    //   or topic in payload.topic
 	  service.sendPayload = function sendPayload( payload ) {
 
       console.log( "*** asked to send this payload:", payload );
 
       var sendRequest = { method: 'POST',
                           url: SERVER_ROOT + '/messages',
-                          data: JSON.stringify(payload)
+                          data: payload //JSON.stringify(payload)
                          };
 
       if(service.timeoutMs!==undefined) {
