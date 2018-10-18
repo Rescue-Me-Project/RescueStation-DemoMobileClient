@@ -82,46 +82,6 @@ SERVER_ROOT = "http://digitallabshub:8080";
       return $http( sendRequest ); // send back a promise
 	  };
 
-    service.send = function send( recipient, title,  payload ) {
-      console.error("service.send no longer available! ");
-      return;
-
-      var fullPayload = {
-        'to': recipient,
-        'notification': {
-          'title': title,
-          'text': 'this is the text property',
-          'sound': 'default',
-          'badge': '0'
-        },
-        'foreground': 'false',
-        'coldstart': 'true',
-        'content-available': '1',
-        'data': payload,
-        'priority': 'high' 
-      };
-      var headers = {
-        'Content-Type':'application/json',
-        'Authorization':'key='+window.FCMKEY+'' //,
-      };
-      var sendRequest = { method: 'POST',
-                          url: 'https://fcm.googleapis.com/fcm/send',
-                          data: fullPayload,
-                          headers: headers };
-      if(service.timeoutMs!==undefined) {
-      	sendRequest.timeout = service.timeoutMs;
-      }
-      console.log("sendRequest: ", sendRequest);
-      $http( sendRequest ).then(
-        function success(result) {
-          console.log('POSTED SUCCESS', result);
-        },
-        function fail( error ) {
-          console.log("POSTED WITH PROVISIOS", error);
-        }
-      );
-    };
-
     service.setCallback = function setCallback( handler ) {
       service.callbackHandler = handler;
     };
