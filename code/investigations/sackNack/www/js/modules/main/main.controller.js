@@ -44,6 +44,10 @@
 						               CONNECTION_REQUEST: 2,
 						               CONNECTION_RESPONSE: 3,
 						               MESSAGE: 4 };
+    vm.MESSAGE_PAYLOAD_TYPE_ID = { "STRING": 0,
+                                   "INTEGER": 1,
+                                   "JSON": 2
+                                 };
 	  vm.ACTIVITY = { SHOW: 1,
 					          SCAN: 2 };
 	  vm.MESSAGE_TIMEOUT_SECONDS = 10;
@@ -132,7 +136,7 @@
 			  			        message_type: vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST,
 			  			        sender_role: vm.role,
 			  			        payload: qrResult.text,
-			  			        payload_format_type: 0
+			  			        payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.STRING
 			  		        };
 					          pushSrvc.sendPayload( payload ).then(function sentPayloadOkay(data){
 						          console.log('initial connection - sent, got', payload, data);
@@ -166,7 +170,7 @@
 			  message_type: vm.MESSAGE_TYPE_ID.MESSAGE,
 			  sender_role: vm.role,
 			  payload: message,
-			  payload_format_type: 0
+			  payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.STRING
 			};
 			pushSrvc.sendPayload( payload ).then(function sentPayloadOkay(data){
 				console.log('initial connection - sent, got', payload, data);
@@ -183,7 +187,14 @@
         vm.inbound.rendered = "Got inbound message - type "+
           Object.keys(vm.MESSAGE_TYPE_ID)[ data.payload.message_type ];
 
+        // return payload to correct data format
         var payload = data.payload;
+        if(payload.payload_format_type === vm.MESSAGE_PAYLOAD_TYPE_ID.INTEGER) {
+          payload.payload = parseInt( payload.payload );
+        } else if (payload.payload_format_type === vm.MESSAGE_PAYLOAD_TYPE_ID.JSON ) {
+          payload.payload = JSON.parse( payload.payload );
+        }
+
         // is this a connection request?
         if (payload.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST) {
           // connection request! send back a confirmation
@@ -195,7 +206,7 @@
             message_type: vm.MESSAGE_TYPE_ID.CONNECTION_RESPONSE,
             sender_role: vm.role,
             payload: payload.payload,
-            payload_format_type: 0
+            payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.STRING
           };
           pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
             console.log('intial connection confirmation sent okay - got ',indata );
@@ -225,8 +236,8 @@
             message_id: payload.message_id,
             message_type: vm.MESSAGE_TYPE_ID.ACK,
             sender_role: vm.role,
-            payload: 0,
-            payload_format_type: 0
+            payload: "0",
+            payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.INTEGER
           };
           pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
             console.log('message '+responsePayload.messageId+' acknowledgement delivered okay.');
@@ -247,8 +258,8 @@
         message_id: uuid.v4(),
         message_type: vm.MESSAGE_TYPE_ID.MESSAGE,
         sender_role: vm.role,
-        payload:{ "message":"hello"},
-        payload_format_type: 0
+        payload: JSON.stringify( { "message":"hello"} ),
+        payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.JSON
       };
       pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
         console.log('topic message '+responsePayload.messageId+' delivered okay.');
