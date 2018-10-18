@@ -66,13 +66,11 @@ SERVER_ROOT = "http://digitallabshub:8080";
     // pass in recipient device in payload.recipient_id
 	  service.sendPayload = function sendPayload( payload ) {
 
-      payload.payload = "£";
-
       console.log( "*** asked to send this payload:", payload );
 
       var sendRequest = { method: 'POST',
                           url: SERVER_ROOT + '/messages',
-                          data: JSON.stringify(payload)
+                          data: "XYZ" //JSON.stringify(payload)
                          };
 
       if(service.timeoutMs!==undefined) {
