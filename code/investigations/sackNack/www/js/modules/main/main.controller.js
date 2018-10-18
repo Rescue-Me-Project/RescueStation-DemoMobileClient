@@ -255,7 +255,7 @@
         connection_id: vm.uuid,
         sender_id: vm.registrationId,
         topic: vm.uuid, //recipient_id: "Hello",
-        message_id: uuid.v4(),
+        message_id: "hello",//uuid.v4(),
         message_type: vm.MESSAGE_TYPE_ID.MESSAGE,
         sender_role: vm.role,
         payload: "hithere", //'{ "message" : "hello" }' ,
