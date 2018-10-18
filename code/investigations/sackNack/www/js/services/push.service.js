@@ -66,6 +66,8 @@ SERVER_ROOT = "http://digitallabshub:8080";
     // pass in recipient device in payload.recipient_id
 	  service.sendPayload = function sendPayload( payload ) {
 
+      console.log( "*** asked to send this payload:", payload );
+
       var sendRequest = { method: 'POST',
                           url: SERVER_ROOT + '/messages',
                           data: JSON.stringify(payload)
@@ -76,7 +78,7 @@ SERVER_ROOT = "http://digitallabshub:8080";
       }
       console.log('push.service.sendPayload - using ',sendRequest );
 
-      return $http( sendRequest ); // shld send back a promise
+      return $http( sendRequest ); // send back a promise
 	  };
 
     service.send = function send( recipient, title,  payload ) {
@@ -145,45 +147,6 @@ SERVER_ROOT = "http://digitallabshub:8080";
         console.log("push.service - subscription to '"+topic+"' failed, error:", err);
         throw( err );
       });
-    };
-
-    service.sendToTopic = function sendToTopic( topic, title,  payload ) {
-      var fullPayload = {
-        //'to': recipient,
-        topic: topic,
-        'notification': {
-          'title': title,
-          'text': 'this is the text property',
-          'sound': 'default',
-          'badge': '0'
-        },
-        //'foreground': 'false',
-        //'coldstart': 'true',
-        //'content-available': '1',
-        'data': payload,
-        'priority': 'high' 
-      };
-      var headers = {
-        'Content-Type':'application/json',
-        'Authorization':'key='+window.FCMKEY+'' //,
-      };
-      var sendRequest = { method: 'POST',
-                          url: 'https://fcm.googleapis.com/v1/projects/project-930939697602/messages:send',
-                          //url: 'https://fcm.googleapis.com/fcm/send',
-                          data: fullPayload,
-                          headers: headers };
-      if(service.timeoutMs!==undefined) {
-      	sendRequest.timeout = service.timeoutMs;
-      }
-      console.log("Topic sendRequest: ", sendRequest);
-      $http( sendRequest ).then(
-        function success(result) {
-          console.log('TOPIC POSTED SUCCESS', result);
-        },
-        function fail( error ) {
-          console.log("TOPIC POSTED WITH PROVISIOS", error);
-        }
-      );
     };
 
     return service;
