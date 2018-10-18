@@ -254,16 +254,16 @@
       var responsePayload = {
         connection_id: vm.uuid,
         sender_id: vm.registrationId,
-        topic: vm.uuid, //recipient_id: "Hello",
+        topic: vm.uuid, 
         message_id: uuid.v4(),
         message_type: vm.MESSAGE_TYPE_ID.MESSAGE,
         sender_role: vm.role,
-        payload: "hithere", //'{ "message" : "hello" }' ,
-        payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.INTEGER
+        payload: { "message" : "hello" },
+        payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.JSON
       };
       pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
         console.log('topic message '+responsePayload.messageId+' delivered okay.');
-        alert(responsePayload.payload);
+
       }, function failedSending(err) {
         console.log('error sending '+responsePayload.message_id);
         alert("Problem sending message.");
