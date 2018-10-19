@@ -67,7 +67,7 @@ SERVER_ROOT = "http://digitallabshub:8080";
     //   or topic in payload.topic
 	  service.sendPayload = function sendPayload( payload ) {
 
-      console.log( "*** asked to send this payload:", payload );
+      console.log( " → asked to send this payload:", payload );
 
       var sendRequest = { method: 'POST',
                           url: SERVER_ROOT + '/messages',

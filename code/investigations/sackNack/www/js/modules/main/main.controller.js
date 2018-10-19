@@ -169,7 +169,7 @@
 			  message_id: uuid.v4(),
 			  message_type: vm.MESSAGE_TYPE_ID.MESSAGE,
 			  sender_role: vm.role,
-			  payload: message,
+			  payload: "TEST",//message,
 			  payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.STRING
 			};
 			pushSrvc.sendPayload( payload ).then(function sentPayloadOkay(data){
