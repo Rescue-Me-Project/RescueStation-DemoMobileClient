@@ -254,7 +254,7 @@
       var responsePayload = {
         connection_id: vm.uuid,
         sender_id: vm.registrationId,
-        topic: vm.uuid,
+        recipient_id: "/topic/" + vm.uuid,
         message_id: uuid.v4(),
         message_type: vm.MESSAGE_TYPE_ID.MESSAGE,
         sender_role: vm.role,
