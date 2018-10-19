@@ -182,7 +182,7 @@
 
         // is this a connection request?
         if (payload.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST) {
-          // connection request! send back a confirmation - response to message in line 111
+          // connection request! send back a confirmation - response to message in line 127
           var responsePayload = {
             connection_id: payload.connection_id,
             sender_id: vm.registrationId,
@@ -204,7 +204,7 @@
           });
         }
         if (payload.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_RESPONSE) {
-          // this is the confirmation of the other user - message from line 172
+          // this is the confirmation of the other user - message from line 185
           vm.uuid = payload.connection_id;
           // subscribe to this topic
           pushSrvc.subscribe( vm.uuid );
@@ -212,6 +212,10 @@
 
         if (payload.message_type === vm.MESSAGE_TYPE_ID.MESSAGE) {
           // an inbound message
+          alert(payload.payload.message);
+          return;
+          // don't ack, at least on this version!
+
           vm.pendingMessage = payload.payload;
           // send a delivery ack before displaying
           var responsePayload = {
@@ -227,7 +231,7 @@
           pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
             console.log('message '+responsePayload.messageId+' acknowledgement delivered okay.');
             //if(payload.payload.hasOwnProperty("message")) {
-              //alert(payload.payload.message);
+            //alert(payload.payload.message);
             //}
           }, function failedSending(err) {
             console.log('error acknowledgeing '+responsePayload.message_id);
