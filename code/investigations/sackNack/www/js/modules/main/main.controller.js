@@ -83,6 +83,20 @@
       });
     };
 
+    vm.setRescuer = function setRescuer( ) {
+      console.log("setting as rescuer");
+      vm.role = vm.ROLES.RESCUER;
+      vm.otherRole = vm.ROLES.RESCUEE;
+      vm.activity = vm.ACTIVITY.SHOW;
+    };
+
+    vm.setRescuee = function setRescuee( ) {
+      console.log("setting as rescue*e*");
+      vm.role = vm.ROLES.RESCUEE;
+      vm.otherRole = vm.ROLES.RESCUER;
+      vm.activity = vm.ACTIVITY.SCAN;
+    };
+
     vm.startCodeScan = function startCodeScan() {
       console.log("starting a QR code scan");
       cordova.plugins.barcodeScanner.scan(
