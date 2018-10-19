@@ -262,7 +262,7 @@
         payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.JSON
       };
       pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
-        console.log('topic message '+responsePayload.messageId+' delivered okay.');
+        console.log('topic message '+responsePayload.message_id+' delivered okay.');
 
       }, function failedSending(err) {
         console.log('error sending '+responsePayload.message_id);
