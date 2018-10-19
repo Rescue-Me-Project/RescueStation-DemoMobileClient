@@ -64,7 +64,7 @@ SERVER_ROOT = "http://digitallabshub:8080";
 
     // pass in a notification object in payload.notification
     // pass in recipient device in payload.recipient_id,
-    //   or topic in payload.topic
+    //   or recipient topic as payload.recipient_id of "/topics/*YOUR_TOPIC*"
 	  service.sendPayload = function sendPayload( payload ) {
 
       console.log( " → asked to send this payload:", payload );

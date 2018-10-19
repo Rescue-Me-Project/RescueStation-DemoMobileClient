@@ -161,31 +161,20 @@
       );
     };
 
-    vm.sendMessageFromRescuer = function sendMessageFromRescuer(message) {
-			// construct a outbound message
-			var payload = {
-			  connection_id: vm.uuid,
-			  sender_id: vm.registrationId,
-			  message_id: uuid.v4(),
-			  message_type: vm.MESSAGE_TYPE_ID.MESSAGE,
-			  sender_role: vm.role,
-			  payload: "TEST",//message,
-			  payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.STRING
-			};
-			pushSrvc.sendPayload( payload ).then(function sentPayloadOkay(data){
-				console.log('initial connection - sent, got', payload, data);
-      }, function errorPayloadSend( error ) {
-				console.log('initial connection - failed send, error', payload, error);
-			});
-    };
-
     vm.handleInbound = function handleInbound( data ) {
-      console.log("got inbound mqressage", data);
+      console.log("got inbound message", data);
 
       if(data.hasOwnProperty("payload")) {
         angular.merge( vm.inbound.data, data.payload );
         vm.inbound.rendered = "Got inbound message - type "+
           Object.keys(vm.MESSAGE_TYPE_ID)[ data.payload.message_type ];
+
+        if(data.payload.hasOwnProperty("sender_id")) {
+          if(parseInt(data.payload.sender_id===vm.registrationId) ) {
+            // skip this, we sent it.
+            return;
+          }
+        }
 
         // return payload to correct data format
         var payload = data.payload;
@@ -241,7 +230,9 @@
           };
           pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
             console.log('message '+responsePayload.messageId+' acknowledgement delivered okay.');
-            alert(payload.payload);
+            if(payload.payload.hasOwnProperty("message")) {
+              alert(payload.payload.message);
+            }
           }, function failedSending(err) {
             console.log('error acknowledgeing '+responsePayload.message_id);
             alert("Problem acknowledgeing an inbound message.");
@@ -258,7 +249,7 @@
         message_id: uuid.v4(),
         message_type: vm.MESSAGE_TYPE_ID.MESSAGE,
         sender_role: vm.role,
-        payload: JSON.stringify({ "message" : "hello" }),
+        payload: JSON.stringify( { "message" : "hello"} ),
         payload_format_type: vm.MESSAGE_PAYLOAD_TYPE_ID.JSON
       };
       pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
