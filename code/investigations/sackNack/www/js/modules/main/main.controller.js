@@ -68,7 +68,7 @@
     vm.initialise = function initialise() {
 
       vm.inbound.rendered = "No registrationId yet...";
-  
+
       pushSrvc.initialisePush( function deviceNowConnected( data ){
         console.log("controller initialised push, got payload ",data );
         vm.inbound.rendered = "Got connected payload";
