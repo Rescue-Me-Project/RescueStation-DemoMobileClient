@@ -83,20 +83,6 @@
       });
     };
 
-    vm.setRescuer = function setRescuer( ) {
-      console.log("setting as rescuer");
-      vm.role = vm.ROLES.RESCUER;
-      vm.otherRole = vm.ROLES.RESCUEE;
-      vm.activity = vm.ACTIVITY.SHOW;
-    };
-
-    vm.setRescuee = function setRescuee( ) {
-      console.log("setting as rescue*e*");
-      vm.role = vm.ROLES.RESCUEE;
-      vm.otherRole = vm.ROLES.RESCUER;
-      vm.activity = vm.ACTIVITY.SCAN;
-    };
-
     vm.startCodeScan = function startCodeScan() {
       console.log("starting a QR code scan");
       cordova.plugins.barcodeScanner.scan(
@@ -123,14 +109,9 @@
 			        $http( connection_payload )
 			  	      .success(
 			  		      function(data, status, headers, config) {
-			  		        // we have a connection uuid in data .id
-			  		        console.log("id: "+data.id, data);
-
-//			  		        vm.uuid = data.id;
-
 			  		        // construct a outbound message
 			  		        var payload = {
-			  			        connection_id: data.id,
+			  			        connection_id: data.id, // we have a connection uuid in data .id
 			  			        sender_id: vm.registrationId,
 			  			        message_id: temp_uuid,
 			  			        message_type: vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST,
@@ -170,8 +151,9 @@
           Object.keys(vm.MESSAGE_TYPE_ID)[ data.payload.message_type ];
 
         if(data.payload.hasOwnProperty("sender_id")) {
-          if(parseInt(data.payload.sender_id===vm.registrationId) ) {
-            // skip this, we sent it.
+          if(data.payload.sender_id===vm.registrationId ) {
+            // skip this; we sent it.
+            console.log("ignoring message as we sent it!", data);
             return;
           }
         }
@@ -186,7 +168,7 @@
 
         // is this a connection request?
         if (payload.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_REQUEST) {
-          // connection request! send back a confirmation
+          // connection request! send back a confirmation - response to message in line 111
           var responsePayload = {
             connection_id: payload.connection_id,
             sender_id: vm.registrationId,
@@ -208,7 +190,7 @@
           });
         }
         if (payload.message_type === vm.MESSAGE_TYPE_ID.CONNECTION_RESPONSE) {
-          // this is the confirmation of the other user
+          // this is the confirmation of the other user - message from line 172
           vm.uuid = payload.connection_id;
           // subscribe to this topic
           pushSrvc.subscribe( vm.uuid );
@@ -230,9 +212,9 @@
           };
           pushSrvc.sendPayload( responsePayload ).then( function sendPayloadOkay(indata) {
             console.log('message '+responsePayload.messageId+' acknowledgement delivered okay.');
-            if(payload.payload.hasOwnProperty("message")) {
-              alert(payload.payload.message);
-            }
+            //if(payload.payload.hasOwnProperty("message")) {
+              //alert(payload.payload.message);
+            //}
           }, function failedSending(err) {
             console.log('error acknowledgeing '+responsePayload.message_id);
             alert("Problem acknowledgeing an inbound message.");
