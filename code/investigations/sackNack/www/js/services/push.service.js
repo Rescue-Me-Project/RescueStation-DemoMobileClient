@@ -93,15 +93,15 @@ SERVER_ROOT = "http://digitallabshub:8080";
         console.log("push.service - subscription to "+topic+"' successful!");
 
         service.push.on('registration', function (data) {
-          alert('registrationId:' + data.registrationId);
+          //alert('registrationId:' + data.registrationId);
         });
 
         service.push.on('notification', function (data) {
-          alert('push:' + JSON.stringify(data));
+          //alert('push:' + JSON.stringify(data));
         });
 
         service.push.on('error', function (e) {
-          alert('error: ' + e.message);
+          //alert('error: ' + e.message);
         });
 
       }, function subscribeFailure( err ){
