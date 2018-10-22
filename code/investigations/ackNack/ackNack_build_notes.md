@@ -69,7 +69,7 @@ When two devices are paired, they must exchange a key by which they can uniquely
 
 ### UUID generation
 
-[angular-uuid](https://github.com/munkychop/angular-uuid) is a wrapper for the DigitalLabs' preferred UUID generator.
+[angular-uuid](https://github.com/munkychop/angular-uuid) is a wrapper for the DigitalLabs' [preferred UUID generator](https://github.com/broofa/node-uuid).
 
 `npm install --save angular-uuid`
 
