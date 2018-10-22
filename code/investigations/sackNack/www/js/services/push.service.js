@@ -1,4 +1,4 @@
-SERVER_ROOT = "http://digitallabshub:8080";
+const SERVER_ROOT = "http://digitallabshub:8080";
 
 (function() {
   'use strict';

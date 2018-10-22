@@ -1,10 +1,7 @@
-window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24ElT1VvglHn3z3TSKUiGwzOquhDhE_1kgZHiBKFRF4SdH2bfKhU60OcRz8_yGAag6AJBqt4QSlkBRYInZhB7QksDKHa8";
-// 'AIzaSyCDtz2rQtSs-ZgGvNgvehdmd4t8wpSlLqY'
-
+window.FCMKEY = "ENTER_YOUR_OWN_KEY_HERE";
 
 (function() {
   'use strict';
-  console.log("pushSrvc executed");
 
   angular
     .module('push', [])
@@ -140,8 +137,8 @@ window.FCMKEY = "AAAA2MBUecI:APA91bG4FOVHW4VDmlWud27Xh6hK5bGxcdfIl1cfGRETw-M24El
         'Authorization':'key='+window.FCMKEY+'' //,
       };
       var sendRequest = { method: 'POST',
-                          url: 'https://fcm.googleapis.com/v1/projects/project-930939697602/messages:send',
-                          //url: 'https://fcm.googleapis.com/fcm/send',
+                          //url: 'https://fcm.googleapis.com/v1/projects/project-930939697602/messages:send', // your project id can be found in the Firebase Console Project page
+                          url: 'https://fcm.googleapis.com/fcm/send',
                           data: fullPayload,
                           headers: headers };
       console.log("Topic sendRequest: ", sendRequest);
