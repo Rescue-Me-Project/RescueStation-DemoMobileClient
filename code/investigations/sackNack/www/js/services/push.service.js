@@ -1,4 +1,4 @@
-const SERVER_ROOT = "http://digitallabshub:8080";
+const SERVER_ROOT = "https://rescuestationpush.herokuapp.com:443";
 
 (function() {
   'use strict';
