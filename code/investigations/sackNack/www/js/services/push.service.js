@@ -1,4 +1,4 @@
-const SERVER_ROOT = "https://rescuestationpush.herokuapp.com:443";
+const SERVER_ROOT = "https://rescuestationpush.herokuapp.com:443"; // heroku service hides secret
 
 (function() {
   'use strict';
