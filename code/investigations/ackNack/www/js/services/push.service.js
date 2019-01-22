@@ -1,4 +1,4 @@
-window.FCMKEY = "AAAAenDG18k:APA91bGOJNxYIaJ2DztcscLrk8tIUmxkAWSxd8jjXBt5gR19Wi33mKDlMeTQCWIEswptftT6ANv8P81_TSuoUxn8zXMuQn9IGVt43etpXbXh4VVHNcLNhaXZ483YqFxAmXOjXS5rhiuV";
+window.FCMKEY = "ENTER_YOUR_OWN_KEY_HERE";
 
 (function() {
   'use strict';
